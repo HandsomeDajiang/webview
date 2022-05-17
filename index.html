@@ -6,28 +6,44 @@
 </head>
 <body>
     <div>
-<!--        <button onclick="closeFrameWindow()">关闭窗口</button>-->
-        <button id="btn" onclick="test()">getToken</button>
-<!--        <button onclick="removeToken()">removeToken</button>-->
+        <button onclick="closeWindow()">关闭窗口</button>
+        <button id="btn" onclick="getToken()">getToken</button>
+        <button onclick="removeToken()">removeToken</button>
 <!--        <p id="content">123</p>-->
 <!--        <a href="https://www.baidu.com/">ggg</a>-->
     </div>
 </body>
 </html>
 <script>
-    // $(function(){
-    //     $('#btn').on('click',function(){
-    //         window.top.postMessage('hi',"*");
-    //     })
-    //     // window.addEventListener('message',function(e){
-    //     //     if(e.origin!=='http://x.x.x.x:8081'){
-    //     //         return;
-    //     //     }
-    //     //     //父页面点击按钮，执行子页面的方法
-    //     //     console.log(e.data);
-    //     // })
-    // })
-    function test() {
-        window.top.postMessage('hi',"file://background.html");
+    window.addEventListener('message',function(e){
+        console.log(e.data);
+        alert("收到了数据" + e.data.toString());
+    })
+    function closeWindow() {
+        window.top.postMessage(
+            {
+                msg:'iframe关闭窗口',
+                type: 1
+            },
+            "*"
+        );
+    }
+    function getToken() {
+        window.top.postMessage(
+            {
+                msg:'iframe获取token',
+                type: 2
+            },
+            "*"
+        );
+    }
+    function removeToken() {
+        window.top.postMessage(
+            {
+                msg:'iframe清除token',
+                type: 3
+            },
+            "*"
+        );
     }
 </script>
