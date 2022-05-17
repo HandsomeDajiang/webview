@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<script src="js_bridge.js"></script>
 <body>
     <div>
         <button onclick="closeWindow()">关闭窗口</button>
@@ -14,36 +15,4 @@
     </div>
 </body>
 </html>
-<script>
-    window.addEventListener('message',function(e){
-        console.log(e.data);
-        alert("收到了数据" + e.data.toString());
-    })
-    function closeWindow() {
-        window.top.postMessage(
-            {
-                msg:'iframe关闭窗口',
-                type: 1
-            },
-            "*"
-        );
-    }
-    function getToken() {
-        window.top.postMessage(
-            {
-                msg:'iframe获取token',
-                type: 2
-            },
-            "*"
-        );
-    }
-    function removeToken() {
-        window.top.postMessage(
-            {
-                msg:'iframe清除token',
-                type: 3
-            },
-            "*"
-        );
-    }
-</script>
+
