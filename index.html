@@ -29,6 +29,6 @@
         console.log(e.source) // 父页面window对象，全等于window.parent/window.top
         console.log(e.data)  //父页面发送的消息
         // }
-        document.getElementById('content').innerText = e.data.toString();
+        document.getElementById('content').innerText = e.data.toString() + '_______' + e.origin.toString();
     },false)
 </script>
