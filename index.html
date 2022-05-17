@@ -19,10 +19,10 @@
         alert(1)
     }
     function getToken() {
-        window.parent.postMessage('webview获取token','http://handsomedajiang.github.io/webview/');
+        window.top.postMessage('webview获取token','*');
     }
     function removeToken() {
-        alert(3)
+        alert(3);
     }
     window.addEventListener('message',e=>{
         console.error(e);
