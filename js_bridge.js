@@ -3,7 +3,7 @@
     window.addEventListener('message',function(e){
         console.log("receive data：" + e.data.toString());
         alert("receive data：" + e.data.toString());
-    })
+    });
 })();
 window.closeWindow = () =>  {
     window.top.postMessage(
@@ -22,6 +22,7 @@ window.getToken = () => {
         },
         "file://*"
     );
+
 }
 window.removeToken = () => {
     window.top.postMessage(
