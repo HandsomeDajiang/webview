@@ -11,7 +11,7 @@ window.closeWindow = () =>  {
             msg:'close webview',
             type: 1
         },
-        "*"
+        "file://*"
     );
 }
 window.getToken = () => {
@@ -20,7 +20,7 @@ window.getToken = () => {
             msg:'get token',
             type: 2
         },
-        "*"
+        "file://*"
     );
 }
 window.removeToken = () => {
@@ -29,6 +29,6 @@ window.removeToken = () => {
             msg:'remove token',
             type: 3
         },
-        "*"
+        "file://*"
     );
 }
