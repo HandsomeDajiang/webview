@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" >
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'none';
+            child-src 'self';
+            connect-src 'self' https: wss: file: 'unsafe-inline';
+            font-src 'self';
+            form-action 'self';
+            frame-src 'self' https://handsomedajiang.github.io/webview/;
+            img-src 'self' blob: data:;
+            media-src 'self' blob:;
+            object-src 'none';
+            script-src 'self';
+            style-src 'self' 'unsafe-inline';"
+    >
     <title>Title</title>
 </head>
 <body>
@@ -9,7 +22,7 @@
         <button onclick="closeFrameWindow()">关闭窗口</button>
         <button onclick="getToken()">getToken</button>
         <button onclick="removeToken()">removeToken</button>
-        <p id="content"></p>
+        <p id="content">123</p>
     </div>
 </body>
 </html>
@@ -30,6 +43,6 @@
         console.log(e.source) // 父页面window对象，全等于window.parent/window.top
         console.log(e.data)  //父页面发送的消息
         // }
-        document.getElementById('content').innerText = e.data.toString() + '_______' + e.origin.toString();
+        document.getElementById('content').innerHTML = e.data.toString() + '_______' + e.origin.toString();
     },false)
 </script>
