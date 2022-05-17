@@ -18,7 +18,7 @@
         return token;
     }
     window.closeWindow = () =>  {
-        const xxx =  this.getToken();
+        const xxx =  window.getToken();
         console.error("############");
         console.error(xxx);
         window.top.postMessage(
