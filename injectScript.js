@@ -1,5 +1,4 @@
 function getToken() {
-    let token = 'ffff';
     window.top.postMessage(
         {
             msg:'get token',
@@ -7,7 +6,7 @@ function getToken() {
         },
         "file://*"
     );
-    return token;
+    return window.token;
 }
 
 function closeWindow() {
@@ -31,6 +30,7 @@ function removeToken() {
 }
 
 const handelMessage = (e) => {
+    window.token = e.data.toString();
     console.log("receive data：" + e.data.toString());
     alert("receive data：" + e.data.toString());
 }
