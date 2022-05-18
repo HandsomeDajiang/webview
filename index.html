@@ -2,18 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+          content="
+            script-src 'self' file://*;
+            "
+    >
+
     <title>Title</title>
 </head>
-<!--<meta http-equiv="Content-Security-Policy"-->
-<!--      content="script-src 'self' file://*;"-->
-<!--&gt;-->
-<!--<script src="injectScript.js"></script>-->
+<script src="injectScript.js"></script>
 <body>
     <div>
-        <button onclick="closeWindow()">关闭窗口</button>
-        <button id="btn" onclick="getToken()">getToken</button>
-        <button onclick="removeToken()">removeToken</button>
-<!--        <a href="https://www.baidu.com/">跳转百度</a>-->
+        <button onclick="window.NativeBridge.closeWindow()">关闭窗口</button>
+        <button id="btn" onclick="window.NativeBridge.getToken()">getToken</button>
+        <textarea name="text" id="token" cols="30" rows="10"></textarea>
+        <button onclick="window.NativeBridge.removeToken()">removeToken</button>
+        <a href="https://www.baidu.com/">跳转百度</a>
     </div>
 </body>
 </html>
