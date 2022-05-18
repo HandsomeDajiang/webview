@@ -1,5 +1,5 @@
 function getToken() {
-    let token = '';
+    let token = 'ffff';
     window.top.postMessage(
         {
             msg:'get token',
