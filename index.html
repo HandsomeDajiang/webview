@@ -4,22 +4,15 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<script src="injectScript.js"></script>
+<!--<script src="injectScript.js"></script>-->
 <body>
     <div>
         <button onclick="closeWindow()">关闭窗口</button>
-        <button id="btn" onclick="_getToken()">getToken</button>
+        <button id="btn" onclick="getToken()">getToken</button>
         <textarea name="textarea" id="text" cols="30" rows="10"></textarea>
         <button onclick="removeToken()">removeToken</button>
 <!--        <a href="https://www.baidu.com/">跳转百度</a>-->
     </div>
 </body>
 </html>
-<script>
-    function _getToken() {
-        getToken().then(res => {
-            document.getElementById('text').innerText = res.data.toString();
-        });
-    }
-</script>
 
