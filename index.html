@@ -4,16 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<script src="obj.js"></script>
-<script>
-    const demo = new User();
-</script>
+<script src="injectScript.js"></script>
 <body>
     <div>
-        <button onclick="demo.closeWindow()">关闭窗口</button>
-        <button id="btn" onclick="demo.getToken()">getToken</button>
-        <button onclick="demo.removeToken()">removeToken</button>
-<!--        <a href="https://www.baidu.com/">ggg</a>-->
+        <button onclick="utils.closeWindow()">关闭窗口</button>
+        <button id="btn" onclick="utils.getToken()">getToken</button>
+        <button onclick="utils.removeToken()">removeToken</button>
+        <a href="https://www.baidu.com/">跳转百度</a>
     </div>
 </body>
 </html>

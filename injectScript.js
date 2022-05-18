@@ -6,6 +6,7 @@ class User {
             this.token = e.data.toString();
         });
     }
+
     getToken() {
         window.top.postMessage(
             {
@@ -25,6 +26,7 @@ class User {
             "file://*"
         );
     }
+
     removeToken() {
         window.top.postMessage(
             {
@@ -35,3 +37,7 @@ class User {
         );
     }
 }
+window.onload = function(){
+    window.utils = new User();
+}
+
