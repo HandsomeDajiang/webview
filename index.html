@@ -17,8 +17,9 @@
 </html>
 <script>
     function _getToken() {
-        const token = getToken();
-        document.getElementById('text').innerText = token;
+        getToken().then(res => {
+            document.getElementById('text').innerText = res.data.toString();
+        });
     }
 </script>
 
