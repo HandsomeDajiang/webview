@@ -1,5 +1,5 @@
-async function getToken() {
-    await window.top.postMessage(
+function getToken() {
+    window.top.postMessage(
         {
             msg:'get token',
             type: 2
