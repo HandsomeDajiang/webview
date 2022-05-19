@@ -4,7 +4,10 @@ async function getToken() {
             {
                 msg:'get token',
                 type: 2,
-                callback: (token)=>{resolve(token)},
+                callback: (token)=>{
+                    console.log("7777");
+                    resolve(token)
+                },
             },
             "file://*"
         );
