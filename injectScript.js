@@ -8,6 +8,8 @@ async function getToken() {
         },
         "file://*"
     );
+    console.log('要返回了！');
+    return _getToken();
 }
 
 const _getToken = async (token) => {
@@ -35,12 +37,12 @@ function removeToken() {
     );
 }
 
-const handelMessage = (e) => {
+const handelMessage = async (e) => {
     console.log("receive token：" + e.data.token.toString());
     console.log("receive callbackid：" + e.data.callbackid.toString());
 
     // 执行回调
-    window.Callbacks[e.data.callbackid](e.data.token.toString())
+    await window.Callbacks[e.data.callbackid](e.data.token.toString())
 }
 
 window.onload = function(){
