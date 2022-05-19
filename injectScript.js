@@ -1,18 +1,22 @@
-async function getToken() {
-    const timestamp = new Date().getTime().toString();
-    window.Callbacks[timestamp] = _getToken
-    window.top.postMessage(
-        {
-            type: '2',
-            callbackid: timestamp,
-        },
-        "file://*"
-    );
-    console.log('要返回了！');
-    return _getToken();
+function getToken() {
+    return new Promise((resolve, reject) => {
+        const timestamp = new Date().getTime().toString();
+        window.Callbacks[timestamp] = _getToken
+        window.top.postMessage(
+            {
+                type: '2',
+                callbackid: timestamp,
+            },
+            "file://*"
+        );
+    });
 }
 
 const _getToken = async (token) => {
+    console.log(window.Callbacks)
+    // 回调后销毁，避免无限添加
+    window.Callbacks = {};
+    
     return new Promise((resolve, reject) => {
         console.log(token);
         resolve(token);
@@ -46,8 +50,7 @@ const handelMessage = async (e) => {
 }
 
 window.onload = function(){
-    window.onmessage = handelMessage;
-
-    window.Callbacks = {}
+    window.onmessage = handelMessage; // 监听消息
+    window.Callbacks = {} // 全局回调对象，  key：随机id ， value：回调函数
 }
 
