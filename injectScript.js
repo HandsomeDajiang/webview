@@ -3,11 +3,11 @@ async function getToken() {
         window.top.postMessage(
             {
                 msg:'get token',
-                type: 2
+                type: 2,
+                callback: (token)=>{resolve(token)},
             },
             "file://*"
         );
-
     })
 }
 
@@ -32,8 +32,10 @@ function removeToken() {
 }
 
 const handelMessage = (e) => {
-    console.log("receive data：" + e.data.toString());
-    alert("receive data：" + e.data.toString());
+    console.log("receive data：" + e.data.token.toString());
+    alert("receive data：" + e.data.token.toString());
+    // 执行回调
+    e.data.callback(e.data.token.toString());
 }
 
 window.onload = function(){
