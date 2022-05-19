@@ -1,34 +1,26 @@
 async function getToken() {
+    const timestamp = new Date().getTime().toString();
+    window.Callbacks[timestamp] = _getToken
+    window.top.postMessage(
+        {
+            type: '2',
+            callbackid: timestamp,
+        },
+        "file://*"
+    );
+}
+
+const _getToken = async (token) => {
     return new Promise((resolve, reject) => {
-        const obj = {
-            msg: 'get token',
-            type: 2,
-            callback: (token) => {
-                console.log("7777");
-                resolve(token)
-            }
-        }
-        const msg = JSON.parse(JSON.stringify(obj));
-        window.top.postMessage(
-            // {
-            //     msg:'get token',
-            //     type: 2,
-            //     callback: (token)=>{
-            //         console.log("7777");
-            //         resolve(token)
-            //     },
-            // },
-            msg,
-            "file://*"
-        );
-    })
+        console.log("77777");
+        resolve(token);
+    });
 }
 
 function closeWindow() {
     window.top.postMessage(
         {
-            msg:'close webview',
-            type: 1
+            type: '1'
         },
         "file://*"
     );
@@ -37,21 +29,23 @@ function closeWindow() {
 function removeToken() {
     window.top.postMessage(
         {
-            msg:'remove token',
-            type: 3
+            type: '3'
         },
         "file://*"
     );
 }
 
 const handelMessage = (e) => {
-    console.log("receive data：" + e.data.token.toString());
-    alert("receive data：" + e.data.token.toString());
+    console.log("receive token：" + e.data.token.toString());
+    console.log("receive callbackid：" + e.data.callbackid.toString());
+
     // 执行回调
-    e.data.callback(e.data.token.toString());
+    window.Callbacks[e.data.callbackid](e.data.token.toString())
 }
 
 window.onload = function(){
     window.onmessage = handelMessage;
+
+    window.Callbacks = {}
 }
 
