@@ -1,14 +1,24 @@
 async function getToken() {
     return new Promise((resolve, reject) => {
+        const obj = {
+            msg: 'get token',
+            type: 2,
+            callback: (token) => {
+                console.log("7777");
+                resolve(token)
+            }
+        }
+        const msg = JSON.parse(JSON.stringify(obj));
         window.top.postMessage(
-            {
-                msg:'get token',
-                type: 2,
-                callback: (token)=>{
-                    console.log("7777");
-                    resolve(token)
-                },
-            },
+            // {
+            //     msg:'get token',
+            //     type: 2,
+            //     callback: (token)=>{
+            //         console.log("7777");
+            //         resolve(token)
+            //     },
+            // },
+            msg,
             "file://*"
         );
     })
