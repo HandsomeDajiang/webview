@@ -14,7 +14,7 @@ async function getToken() {
 
 const _getToken = async (token) => {
     return new Promise((resolve, reject) => {
-        console.log("77777");
+        console.log(token);
         resolve(token);
     });
 }
