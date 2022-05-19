@@ -1,26 +1,18 @@
 function getToken() {
-    return new Promise((resolve, reject) => {
-        const timestamp = new Date().getTime().toString();
-        window.Callbacks[timestamp] = _getToken
-        window.top.postMessage(
-            {
-                type: '2',
-                callbackid: timestamp,
-            },
-            "file://*"
-        );
-    });
+    const timestamp = new Date().getTime().toString();
+    window.Callbacks[timestamp] = _getToken;    // 绑定回调
+    window.top.postMessage(
+        {
+            type: '2',
+            callbackid: timestamp,
+        },
+        "file://*"
+    );
 }
 
-const _getToken = async (token) => {
-    console.log(window.Callbacks)
-    // 回调后销毁，避免无限添加
-    window.Callbacks = {};
-    
-    return new Promise((resolve, reject) => {
-        console.log(token);
-        resolve(token);
-    });
+const _getToken = (token) => {
+    console.log(window.Callbacks);
+    return token;
 }
 
 function closeWindow() {
@@ -46,7 +38,10 @@ const handelMessage = async (e) => {
     console.log("receive callbackid：" + e.data.callbackid.toString());
 
     // 执行回调
-    await window.Callbacks[e.data.callbackid](e.data.token.toString())
+    window.Callbacks[e.data.callbackid](e.data.token.toString());
+
+    // 回调后清空，避免无限添加。
+    window.Callbacks = {};
 }
 
 window.onload = function(){
