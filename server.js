@@ -1,59 +1,28 @@
-function getTokenToTextArea() {
-    document.getElementById('text').innerHTML = getToken();
-}
-
-function getToken() {
-    const timestamp = new Date().getTime().toString();
-    window.Callbacks[timestamp] = _getToken;    // 绑定回调
+async function getWebToken() {
     window.top.postMessage(
         {
             type: '2',
-            callbackid: timestamp,
         },
         "file://*"
     );
-
-    // 当token已经获取并被保存  就返回这个token
-    while (true){
-        if (window.token){
-            return window.token;
-        }
-    }
+    return new Promise((resolve)=>{
+        setInterval(()=>{
+            if (window.token){ // 已经有了
+                clearInterval();
+                resolve(window.token);
+            }
+        },100)
+    });
 }
 
-const _getToken = (token) => {
-    console.log(window.Callbacks);
-    console.log(token);
-    window.token = token
-}
-
-function closeWindow() {
-    window.top.postMessage(
-        {
-            type: '1'
-        },
-        "file://*"
-    );
-}
-
-function removeToken() {
-    window.top.postMessage(
-        {
-            type: '3'
-        },
-        "file://*"
-    );
+async function getToken() {
+    const token = await getWebToken();
+    document.getElementById('text').innerHTML = token.result.data.toString();
 }
 
 const handelMessage = (e) => {
     console.log("receive token：" + e.data.token.toString());
     console.log("receive callbackid：" + e.data.callbackid.toString());
-
-    // 执行回调
-    window.Callbacks[e.data.callbackid](e.data.token.toString());
-
-    // 回调后清空，避免无限添加。
-    window.Callbacks = {};
 }
 
 window.onload = function(){
