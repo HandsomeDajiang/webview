@@ -1,17 +1,22 @@
 function getToken() {
-    const timestamp = new Date().getTime().toString();
-    window.Callbacks[timestamp] = _getToken;    // 绑定回调
-    window.top.postMessage(
-        {
-            type: '2',
-            callbackid: timestamp,
-        },
-        "file://*"
-    );
+    return new Promise(((resolve, reject) => {
+        const timestamp = new Date().getTime().toString();
+        window.Callbacks[timestamp] = _getToken;    // 绑定回调
+        const xxx =  window.top.postMessage(
+            {
+                type: '2',
+                callbackid: timestamp,
+            },
+            "file://*"
+        );
+        debugger
+    }))
+
 }
 
 const _getToken = (token) => {
     console.log(window.Callbacks);
+    console.log(token);
     return token;
 }
 
@@ -33,7 +38,7 @@ function removeToken() {
     );
 }
 
-const handelMessage = async (e) => {
+const handelMessage = (e) => {
     console.log("receive token：" + e.data.token.toString());
     console.log("receive callbackid：" + e.data.callbackid.toString());
 
