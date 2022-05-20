@@ -1,23 +1,30 @@
-function getToken() {
-    return new Promise(((resolve, reject) => {
-        const timestamp = new Date().getTime().toString();
-        window.Callbacks[timestamp] = _getToken;    // 绑定回调
-        const xxx =  window.top.postMessage(
-            {
-                type: '2',
-                callbackid: timestamp,
-            },
-            "file://*"
-        );
-        debugger
-    }))
+function getTokenToTextArea() {
+    document.getElementById('text').innerHTML = getToken();
+}
 
+function getToken() {
+    const timestamp = new Date().getTime().toString();
+    window.Callbacks[timestamp] = _getToken;    // 绑定回调
+    window.top.postMessage(
+        {
+            type: '2',
+            callbackid: timestamp,
+        },
+        "file://*"
+    );
+
+    // 当token已经获取并被保存  就返回这个token
+    while (true){
+        if (window.token){
+            return window.token;
+        }
+    }
 }
 
 const _getToken = (token) => {
     console.log(window.Callbacks);
     console.log(token);
-    return token;
+    window.token = token
 }
 
 function closeWindow() {
