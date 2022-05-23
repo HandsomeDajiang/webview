@@ -7,13 +7,9 @@ function callHandler(method, params, callback) {
 }
 
 async function getMiniProgramToken(params) {
-    return await getToken(params);
-}
-
-async function getToken(params) {
     window.miniProgramToken = undefined;
     const timestamp = new Date().getTime().toString();
-    window.WKWVJBTempCallbacks[timestamp] = _getToken;
+    window.WKWVJBTempCallbacks[timestamp] = getToken;
     window.top.postMessage(
         {
             type: '2',
@@ -30,7 +26,7 @@ async function getToken(params) {
     });
 }
 
-function _getToken(response) {
+function getToken(response) {
     window.miniProgramToken = response;
 }
 
@@ -51,14 +47,14 @@ window.WKWVJBTempCallbacks = {}
 window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;
 
 function getTTT() {
-    this.setupWKWebViewJavascriptBridge(function (bridge) {
+    // this.setupWKWebViewJavascriptBridge(function (bridge) {
         let parms = {'appId': 'b4933e7b0c12f9c16a'}
-        bridge.callHandler('getMiniProgramToken', parms, function(response) {
+        window.WKWebViewJavascriptBridge.callHandler('getMiniProgramToken', parms, function(response) {
             console.log("$$$$$$$$");
             console.log(response);
             console.log(response.result);
         });
-    });
+    // });
 }
 
 
