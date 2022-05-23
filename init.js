@@ -1,10 +1,25 @@
+window.WKWebViewJavascriptBridge = {
+    callHandler: callHandler,
+};
+
 class Bridge {
     callHandler(method,params,callback){
-        // window.WKWVJBCallbacks[method](params)
         callback(window.WKWVJBCallbacks[method](params));
     }
 }
-const bridge = new Bridge();
+
+function callHandler(method, params, callback) {
+    callback(window.WKWVJBCallbacks[method](params));
+}
+
+//  初始化
+function initWKWebViewJavascriptBridge(callback) {
+    window.WKWebViewJavascriptBridge = new Bridge();
+
+    window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;
+
+    return callback(window.WKWebViewJavascriptBridge);
+}
 
 const getMiniProgramToken = async function(params) {
     return await getToken(params);
@@ -23,12 +38,10 @@ const getToken = async function(params) {
         "file://*"
     );
     return new Promise((resolve)=>{
-        setInterval(()=>{
-            if (window.miniProgramToken){
-                clearInterval();
-                resolve(window.miniProgramToken);
-            }
-        },50);
+        setTimeout(()=>{
+            clearInterval();
+            resolve(window.miniProgramToken);
+        });
     });
 }
 
@@ -51,16 +64,15 @@ window.onmessage = handelMessage;
 window.WKWVJBCallbacks = {}
 window.WKWVJBTempCallbacks = {}
 
-// 注册方法并绑定到 window 全局对象上。 后续有其他需求这边需要加上。
-window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;
-
 function getTTT() {
-    this.setupWKWebViewJavascriptBridge(function () {
+    this.setupWKWebViewJavascriptBridge(function (bridge) {
         let parms = {'appId': 'b4933e7b0c12f9c16a'}
         bridge.callHandler('getMiniProgramToken', parms, function(response) {
             console.log("$$$$$$$$");
             console.log(response);
             console.log(response.result);
-        })
+        });
     });
 }
+
+

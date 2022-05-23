@@ -7,8 +7,8 @@
 
 import Foundation
 
-let WKWebViewJavascriptBridgeJS = """
-;(function() {
+let WKWebViewJavascriptBridgeJS =
+(function() {
     if (window.WKWebViewJavascriptBridge) {
         return;
     }
@@ -101,4 +101,3 @@ let WKWebViewJavascriptBridgeJS = """
         }
     }
 })();
-"""
