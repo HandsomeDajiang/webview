@@ -76,16 +76,16 @@
 //     }
 // }
 //
-window.onload = function(){
-    const setupWKWebViewJavascriptBridge = (callback) => {
-        if (!window.WKWebViewJavascriptBridge) { //  适配 mac 端。
-
-        }
-        if (window.WKWebViewJavascriptBridge) {
-            return callback(window.WKWebViewJavascriptBridge);
-        }
-    }
-}
+// window.onload = function(){
+//     const setupWKWebViewJavascriptBridge = (callback) => {
+//         if (!window.WKWebViewJavascriptBridge) { //  适配 mac 端。
+//             return  callback();
+//         }
+//         if (window.WKWebViewJavascriptBridge) {
+//             return callback(window.WKWebViewJavascriptBridge);
+//         }
+//     }
+// }
 //
 //
 //
