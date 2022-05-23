@@ -1,3 +1,4 @@
+
 function closeWindow() {
     window.top.postMessage(
         {
@@ -31,7 +32,7 @@ async function getToken() {
 async function getMiniProgramToken() {
     const token = await getToken();
     console.log(token);
-    document.getElementById('text').innerHTML = token.response.toString();
+    document.getElementById('text').innerHTML = token.toString();
 }
 
 const _getToken = (response) => {
@@ -44,7 +45,7 @@ const _removeToken = (response) => {
 async function removeMiniProgramToken() {
     const result = await removeToken();
     console.log(result.toString());
-    document.getElementById('text').innerHTML = result.response.toString();
+    document.getElementById('text').innerHTML = result.toString();
 }
 
 async function removeToken() {
@@ -81,6 +82,9 @@ window.onload = function(){
     //清空一下，避免无限添加。
     window.WKWVJBCallbacks = {} // 全局回调对象，  key：随机id ， value：回调函数
 
+    window.WKWebViewJavascriptBridge = {
+
+    }
 
 }
 
