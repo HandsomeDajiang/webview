@@ -14,7 +14,7 @@ async function callHandler(method, params, callback) {
 }
 
 async function getMiniProgramToken(params) {
-    window.miniProgramToken = undefined;
+    window.miniProgramToken = undefined
     const timestamp = new Date().getTime().toString();
     window.WKWVJBTempCallbacks[timestamp] = getToken;
     window.top.postMessage(
@@ -27,7 +27,8 @@ async function getMiniProgramToken(params) {
     );
     return new Promise((resolve)=>{
         setInterval(()=>{
-            if (window.miniProgramToken){ // 有数据了
+            // 有数据了,并且是新的。  通过时间戳来判断新旧。
+            if (window.miniProgramToken){
                 clearInterval();
                 resolve(window.miniProgramToken);
             }
