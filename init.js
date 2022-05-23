@@ -1,6 +1,6 @@
 class Bridge {
     callHandler(method,params,callback){
-       // window.WKWVJBCallbacks[method](params)  返回 promise
+       // window.WKWVJBCallbacks[method](params)
         callback(window.WKWVJBCallbacks[method](params));
     }
 }
@@ -51,19 +51,20 @@ window.onmessage = handelMessage;
 window.WKWVJBCallbacks = {}
 window.WKWVJBTempCallbacks = {}
 
-window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;    // 注册方法并绑定到 window 全局对象上。
+// 注册方法并绑定到 window 全局对象上。 后续有其他需求这边需要加上。
+window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;
 
 function getTTT() {
-    let parms = {'appId': 'b4933e7b0c12f9c16a'}
-    bridge.callHandler('getMiniProgramToken', parms, function(response) {
-        console.log("$$$$$$$$");
-        console.log(response);
+    this.setupWKWebViewJavascriptBridge(function (bridge) {
+        let parms = {'appId': 'b4933e7b0c12f9c16a'}
+        bridge.callHandler('getMiniProgramToken', parms, function(response) {
+            console.log("$$$$$$$$");
+            console.log(response);
+            console.log(response.result);
+        })
     });
 }
-// this.setupWKWebViewJavascriptBridge = (function(){
-//     let parms = {'appId': 'b4933e7b0c12f9c16a'}
-//     bridge.callHandler('getMiniProgramToken', parms, function(response) {
-//         console.log("$$$$$$$$");
-//         console.log(response);
-//     })
-// })();
+
+this.setupWKWebViewJavascriptBridge = (func) => {
+    func();
+}

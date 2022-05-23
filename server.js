@@ -76,17 +76,16 @@
 //     }
 // }
 //
-// window.onload = function(){
-//     if (!window.WKWebViewJavascriptBridge) {
-//         return callback(window.WKWebViewJavascriptBridge);
-//     }
-//     if (window.WKWebViewJavascriptBridge) {
-//         return callback(window.WKWebViewJavascriptBridge);
-//     }
-//     if (window.WKWVJBCallbacks) {
-//         return window.WKWVJBCallbacks.push(callback);
-//     }
-// }
+window.onload = function(){
+    const setupWKWebViewJavascriptBridge = (callback) => {
+        if (!window.WKWebViewJavascriptBridge) { //  适配 mac 端。
+
+        }
+        if (window.WKWebViewJavascriptBridge) {
+            return callback(window.WKWebViewJavascriptBridge);
+        }
+    }
+}
 //
 //
 //
