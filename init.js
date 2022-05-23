@@ -12,8 +12,6 @@ function setupWKWebViewJavascriptBridge(callback) {
     return null;
 }
 
-
-
 async function removeMiniProgramToken(params) {
     window.miniProgramRemoveToken = undefined
     const timestamp = new Date().getTime().toString();
