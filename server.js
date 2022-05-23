@@ -13,7 +13,7 @@ async function getWebToken() {
     window.top.postMessage(
         {
             type: '2',
-            callbakcid: timestamp
+            callbackid: timestamp
         },
         "file://*"
     );
