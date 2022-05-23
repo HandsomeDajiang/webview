@@ -30,8 +30,8 @@ async function getToken() {
 
 async function getMiniProgramToken() {
     const token = await getToken();
-    console.log(token);
-    document.getElementById('text').innerHTML = token.toString();
+    console.log(token.data.toString());
+    document.getElementById('text').innerHTML = token.data.toString();
 }
 
 const _getToken = (response) => {
@@ -43,8 +43,8 @@ const _removeToken = (response) => {
 
 async function removeMiniProgramToken() {
     const result = await removeToken();
-    console.log(result);
-    document.getElementById('text').innerHTML = result.toString();
+    console.log(result.data.toString());
+    document.getElementById('text').innerHTML = result.data.toString();
 }
 
 function removeToken() {
