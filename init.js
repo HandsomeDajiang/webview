@@ -6,11 +6,11 @@ function callHandler(method, params, callback) {
     callback(window.WKWVJBCallbacks[method](params));
 }
 
-const getMiniProgramToken = async function(params) {
+async function getMiniProgramToken(params) {
     return await getToken(params);
 }
 
-const getToken = async function(params) {
+async function getToken(params) {
     window.miniProgramToken = undefined;
     const timestamp = new Date().getTime().toString();
     window.WKWVJBTempCallbacks[timestamp] = _getToken;
@@ -30,11 +30,11 @@ const getToken = async function(params) {
     });
 }
 
-const _getToken = function(response) {
+function _getToken(response) {
     window.miniProgramToken = response;
 }
 
-const handelMessage = function(e) {
+function handelMessage(e) {
     const callbackid = e.data.callbackid;
     if (callbackid){
         window.WKWVJBTempCallbacks[callbackid](e.data.response);
