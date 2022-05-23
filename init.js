@@ -1,6 +1,7 @@
 window.WKWebViewJavascriptBridge = {
     callHandler: callHandler,
 };
+
 async function callHandler(method, params, callback) {
     params ? callback(await window.WKWVJBCallbacks[method](params)) : callback(await window.WKWVJBCallbacks[method]());
 }
