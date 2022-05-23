@@ -8,6 +8,7 @@ function closeWindow() {
 }
 
 async function getToken() {
+    window.miniProgramToken = undefined;
     const timestamp = new Date().getTime().toString();
     window.WKWVJBCallbacks[timestamp] = _getToken;
     window.top.postMessage(
@@ -21,9 +22,7 @@ async function getToken() {
         setInterval(()=>{
             if (window.miniProgramToken){
                 clearInterval();
-                const miniProgramToken = {...window.miniProgramToken};
-                window.miniProgramToken = undefined;
-                resolve(miniProgramToken);
+                resolve(window.miniProgramToken);
             }
         },50);
     });
@@ -49,6 +48,7 @@ async function removeMiniProgramToken() {
 }
 
 function removeToken() {
+    window.miniProgramTokenRemove = undefined;
     const timestamp = new Date().getTime().toString();
     window.WKWVJBCallbacks[timestamp] = _removeToken;
     window.top.postMessage(
@@ -62,9 +62,7 @@ function removeToken() {
         setInterval(()=>{
             if (window.miniProgramTokenRemove){
                 clearInterval();
-                const miniProgramTokenRemove = {...window.miniProgramTokenRemove};
-                window.miniProgramTokenRemove = undefined;
-                resolve(miniProgramTokenRemove);
+                resolve(window.miniProgramTokenRemove);
             }
         },50);
     });
