@@ -59,4 +59,4 @@ this.setupWKWebViewJavascriptBridge = (function(){
         console.log("$$$$$$$$");
         console.log(response);
     })
-})
+})();
