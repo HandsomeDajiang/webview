@@ -1,6 +1,6 @@
 class Bridge {
     callHandler(method,params,callback){
-       // window.WKWVJBCallbacks[method](params)
+        // window.WKWVJBCallbacks[method](params)
         callback(window.WKWVJBCallbacks[method](params));
     }
 }
@@ -55,7 +55,7 @@ window.WKWVJBTempCallbacks = {}
 window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;
 
 function getTTT() {
-    this.setupWKWebViewJavascriptBridge(function (bridge) {
+    this.setupWKWebViewJavascriptBridge(function () {
         let parms = {'appId': 'b4933e7b0c12f9c16a'}
         bridge.callHandler('getMiniProgramToken', parms, function(response) {
             console.log("$$$$$$$$");
@@ -63,8 +63,4 @@ function getTTT() {
             console.log(response.result);
         })
     });
-}
-
-this.setupWKWebViewJavascriptBridge = (func) => {
-    func();
 }
