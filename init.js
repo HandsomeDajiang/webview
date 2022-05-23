@@ -2,8 +2,15 @@ window.WKWebViewJavascriptBridge = {
     callHandler: callHandler,
 };
 
-function callHandler(method, params, callback) {
-    callback(window.WKWVJBCallbacks[method](params));
+function setupWKWebViewJavascriptBridge(callback) {
+    if (window.WKWebViewJavascriptBridge) {
+        return callback(window.WKWebViewJavascriptBridge);
+    }
+    return null;
+}
+
+async function callHandler(method, params, callback) {
+    callback(await window.WKWVJBCallbacks[method](params));
 }
 
 async function getMiniProgramToken(params) {
@@ -19,10 +26,14 @@ async function getMiniProgramToken(params) {
         "file://*"
     );
     return new Promise((resolve)=>{
-        setTimeout(()=>{
-            clearInterval();
-            resolve(window.miniProgramToken);
-        });
+        setInterval(()=>{
+            if (window.miniProgramToken){ // 有数据了
+                clearInterval();
+                const miniProgramToken = {...window.miniProgramToken}
+                window.miniProgramToken = undefined;
+                resolve(miniProgramToken);
+            }
+        },20);
     });
 }
 
@@ -47,14 +58,14 @@ window.WKWVJBTempCallbacks = {}
 window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;
 
 function getTTT() {
-    // this.setupWKWebViewJavascriptBridge(function (bridge) {
+    this.setupWKWebViewJavascriptBridge(function (bridge) {
         let parms = {'appId': 'b4933e7b0c12f9c16a'}
-        window.WKWebViewJavascriptBridge.callHandler('getMiniProgramToken', parms, function(response) {
+        bridge.callHandler('getMiniProgramToken', parms, function(response) {
             console.log("$$$$$$$$");
             console.log(response);
             console.log(response.result);
         });
-    // });
+    });
 }
 
 
