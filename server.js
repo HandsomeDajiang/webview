@@ -9,7 +9,7 @@ function closeWindow() {
 
 async function getWebToken() {
     const timestamp = new Date().getTime().toString();
-    window.Callbacks[timestamp] = _getToken();
+    window.Callbacks[timestamp] = _getToken;
     window.top.postMessage(
         {
             type: '2',
@@ -23,7 +23,7 @@ async function getWebToken() {
                 clearInterval();
                 resolve(window.token);
             }
-        },100);
+        },50);
     });
 }
 
@@ -33,7 +33,7 @@ async function getToken() {
     document.getElementById('text').innerHTML = token.toString();
 }
 
-function _getToken(token) {
+const _getToken = (token) => {
     window.token = token;
 }
 
