@@ -74,7 +74,14 @@ function removeTokenOperation(response) {
 }
 
 function handelMessage(e) {
-    const callbackid = e.data.callbackid;
+    const { callbackid, status } = e.data || {}
+
+    if (status && status === 400) {
+        clearInterval();
+        alert('error');
+        return
+    }
+    
     if (callbackid){
         window.WKWVJBTempCallbacks[callbackid](e.data.response);
     }
