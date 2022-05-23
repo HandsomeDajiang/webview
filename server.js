@@ -21,8 +21,8 @@ async function getToken() {
 }
 
 const handelMessage = (e) => {
-    console.log("receive token：" + e.data.token.toString());
-    console.log("receive callbackid：" + e.data.callbackid.toString());
+    console.log("receive token：" + e.data.toString());
+    window.token = e.data.toString()
 }
 
 window.onload = function(){
