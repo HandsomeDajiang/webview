@@ -7,9 +7,9 @@ function closeWindow() {
     );
 }
 
-async function getWebToken() {
+async function getToken() {
     const timestamp = new Date().getTime().toString();
-    window.Callbacks[timestamp] = _getToken;
+    window.WKWVJBCallbacks[timestamp] = _getToken;
     window.top.postMessage(
         {
             type: '2',
@@ -19,44 +19,70 @@ async function getWebToken() {
     );
     return new Promise((resolve)=>{
         setInterval(()=>{
-            if (window.token){ // 已经有了
+            if (window.miniProgramToken){
                 clearInterval();
-                resolve(window.token);
+                const miniProgramToken = {...window.miniProgramToken};
+                window.miniProgramToken = undefined;
+                resolve(miniProgramToken);
             }
         },50);
     });
 }
 
-async function getToken() {
-    const token = await getWebToken();
+async function getMiniProgramToken() {
+    const token = await getToken();
     console.log(token);
     document.getElementById('text').innerHTML = token.toString();
 }
 
-const _getToken = (token) => {
-    window.token = token;
+const _getToken = (response) => {
+    window.miniProgramToken = response;
+}
+const _removeToken = (response) => {
+    window.miniProgramTokenRemove = response;
+}
+
+async function removeMiniProgramToken() {
+    const result = await removeToken();
+    console.log(result);
+    document.getElementById('text').innerHTML = result.toString();
 }
 
 function removeToken() {
+    const timestamp = new Date().getTime().toString();
+    window.WKWVJBCallbacks[timestamp] = _removeToken;
     window.top.postMessage(
         {
             type: '3',
+            callbackid: timestamp
         },
         "file://*"
     );
+    return new Promise((resolve)=>{
+        setInterval(()=>{
+            if (window.miniProgramTokenRemove){
+                clearInterval();
+                const miniProgramTokenRemove = {...window.miniProgramTokenRemove};
+                window.miniProgramTokenRemove = undefined;
+                resolve(miniProgramTokenRemove);
+            }
+        },50);
+    });
 }
 
 const handelMessage = (e) => {
     const callbackid = e.data.callbackid;
     if (callbackid){
-        window.Callbacks[callbackid](e.data.data);
+        window.WKWVJBCallbacks[callbackid](e.data.response);
     }
 }
 
 window.onload = function(){
     window.onmessage = handelMessage; // 监听消息
 
-    // 最后清空一下，避免无限添加。
-    window.Callbacks = {} // 全局回调对象，  key：随机id ， value：回调函数
+    //清空一下，避免无限添加。
+    window.WKWVJBCallbacks = {} // 全局回调对象，  key：随机id ， value：回调函数
 }
+
+
 
