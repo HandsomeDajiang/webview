@@ -47,7 +47,7 @@ async function removeMiniProgramToken() {
     document.getElementById('text').innerHTML = result.response.toString();
 }
 
-function removeToken() {
+async function removeToken() {
     window.miniProgramTokenRemove = undefined;
     const timestamp = new Date().getTime().toString();
     window.WKWVJBCallbacks[timestamp] = _removeToken;
