@@ -2,23 +2,8 @@ window.WKWebViewJavascriptBridge = {
     callHandler: callHandler,
 };
 
-class Bridge {
-    callHandler(method,params,callback){
-        callback(window.WKWVJBCallbacks[method](params));
-    }
-}
-
 function callHandler(method, params, callback) {
     callback(window.WKWVJBCallbacks[method](params));
-}
-
-//  初始化
-function initWKWebViewJavascriptBridge(callback) {
-    window.WKWebViewJavascriptBridge = new Bridge();
-
-    window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;
-
-    return callback(window.WKWebViewJavascriptBridge);
 }
 
 const getMiniProgramToken = async function(params) {
@@ -59,10 +44,11 @@ const handelMessage = function(e) {
     window.WKWVJBTempCallbacks = {}
 }
 
-
 window.onmessage = handelMessage;
 window.WKWVJBCallbacks = {}
 window.WKWVJBTempCallbacks = {}
+
+window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;
 
 function getTTT() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
