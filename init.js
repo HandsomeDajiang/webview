@@ -29,9 +29,7 @@ async function getMiniProgramToken(params) {
         setInterval(()=>{
             if (window.miniProgramToken){ // 有数据了
                 clearInterval();
-                const miniProgramToken = {...window.miniProgramToken}
-                window.miniProgramToken = undefined;
-                resolve(miniProgramToken);
+                resolve(window.miniProgramToken);
             }
         },20);
     });
