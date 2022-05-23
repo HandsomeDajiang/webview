@@ -53,10 +53,17 @@ window.WKWVJBTempCallbacks = {}
 
 window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;    // 注册方法并绑定到 window 全局对象上。
 
-this.setupWKWebViewJavascriptBridge = (function(){
+function getTTT() {
     let parms = {'appId': 'b4933e7b0c12f9c16a'}
     bridge.callHandler('getMiniProgramToken', parms, function(response) {
         console.log("$$$$$$$$");
         console.log(response);
-    })
-})();
+    });
+}
+// this.setupWKWebViewJavascriptBridge = (function(){
+//     let parms = {'appId': 'b4933e7b0c12f9c16a'}
+//     bridge.callHandler('getMiniProgramToken', parms, function(response) {
+//         console.log("$$$$$$$$");
+//         console.log(response);
+//     })
+// })();
