@@ -81,7 +81,7 @@ function handelMessage(e) {
         alert('error');
         return
     }
-    
+
     if (callbackid){
         window.WKWVJBTempCallbacks[callbackid](e.data.response);
     }
