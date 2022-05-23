@@ -10,7 +10,7 @@ function setupWKWebViewJavascriptBridge(callback) {
 }
 
 async function callHandler(method, params, callback) {
-    callback(await window.WKWVJBCallbacks[method](params));
+    params ? callback(await window.WKWVJBCallbacks[method](params)) : callback(await window.WKWVJBCallbacks[method]());
 }
 
 async function removeMiniProgramToken(params) {
@@ -69,6 +69,7 @@ function closePage() {
 function getTokenOperation(response) {
     window.miniProgramGetToken = response;
 }
+
 function removeTokenOperation(response) {
     window.miniProgramRemoveToken = response;
 }
@@ -100,23 +101,23 @@ function getToken() {
     });
 }
 
-function closeWindow() {
+function removeToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
         let parms = {'appId': 'b4933e7b0c12f9c16a'}
-        bridge.callHandler('getMiniProgramToken', parms, function(response) {
-            document.getElementById('text').innerHTML = response.toString();
+        bridge.callHandler('removeMiniProgramToken', parms, function(response) {
+            console.log(response);
+            // document.getElementById('text').innerHTML = response.toString();
+        });
+    });
+}
+
+function closeWindow() {
+    this.setupWKWebViewJavascriptBridge(function (bridge) {
+        bridge.callHandler('closePage', null, function(response) {
             console.log(response);
         });
     });
 }
 
-function removeToken() {
-    this.setupWKWebViewJavascriptBridge(function (bridge) {
-        let parms = {'appId': 'b4933e7b0c12f9c16a'}
-        bridge.callHandler('removeMiniProgramToken', parms, function(response) {
-            document.getElementById('text').innerHTML = response.toString();
-            console.log(response);
-        });
-    });
-}
+
 
