@@ -10,7 +10,7 @@ const getMiniProgramToken = async function(params) {
     return await getToken(params);
 }
 
-const  getToken = async function(params) {
+const getToken = async function(params) {
     window.miniProgramToken = undefined;
     const timestamp = new Date().getTime().toString();
     window.WKWVJBTempCallbacks[timestamp] = _getToken;
@@ -48,6 +48,9 @@ const handelMessage = function(e) {
 
 
 window.onmessage = handelMessage;
+window.WKWVJBCallbacks = {}
+window.WKWVJBTempCallbacks = {}
+
 window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;    // 注册方法并绑定到 window 全局对象上。
 
 this.setupWKWebViewJavascriptBridge = (function(){
