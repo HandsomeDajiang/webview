@@ -96,7 +96,7 @@ function getToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
         let parms = {'appId': 'b4933e7b0c12f9c16a'}
         bridge.callHandler('getMiniProgramToken', parms, function(response) {
-            console.log(response.toString());
+            console.log(response);
         });
     });
 }
@@ -106,7 +106,7 @@ function removeToken() {
         let parms = {'appId': 'b4933e7b0c12f9c16a'}
         bridge.callHandler('removeMiniProgramToken', parms, function(response) {
             console.log(response);
-            // document.getElementById('text').innerHTML = response.toString();
+            document.getElementById('text').innerHTML = response
         });
     });
 }
@@ -115,6 +115,7 @@ function closeWindow() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
         bridge.callHandler('closePage', null, function(response) {
             console.log(response);
+            document.getElementById('text').innerHTML = response
         });
     });
 }
