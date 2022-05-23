@@ -1,6 +1,9 @@
 window.WKWebViewJavascriptBridge = {
     callHandler: callHandler,
 };
+async function callHandler(method, params, callback) {
+    params ? callback(await window.WKWVJBCallbacks[method](params)) : callback(await window.WKWVJBCallbacks[method]());
+}
 
 function setupWKWebViewJavascriptBridge(callback) {
     if (window.WKWebViewJavascriptBridge) {
@@ -9,9 +12,7 @@ function setupWKWebViewJavascriptBridge(callback) {
     return null;
 }
 
-async function callHandler(method, params, callback) {
-    params ? callback(await window.WKWVJBCallbacks[method](params)) : callback(await window.WKWVJBCallbacks[method]());
-}
+
 
 async function removeMiniProgramToken(params) {
     window.miniProgramRemoveToken = undefined
@@ -96,7 +97,11 @@ function getToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
         let parms = {'appId': 'b4933e7b0c12f9c16a'}
         bridge.callHandler('getMiniProgramToken', parms, function(response) {
-            console.log(response);
+            if (response) {
+                console.log(response);
+                const { status, token } = response;
+                document.getElementById('text').innerHTML = token
+            }
         });
     });
 }
@@ -105,8 +110,9 @@ function removeToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
         let parms = {'appId': 'b4933e7b0c12f9c16a'}
         bridge.callHandler('removeMiniProgramToken', parms, function(response) {
-            console.log(response);
-            document.getElementById('text').innerHTML = response
+            if (response) {
+                console.log(response);
+            }
         });
     });
 }
@@ -114,8 +120,9 @@ function removeToken() {
 function closeWindow() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
         bridge.callHandler('closePage', null, function(response) {
-            console.log(response);
-            document.getElementById('text').innerHTML = response
+            if (response) {
+                console.log(response);
+            }
         });
     });
 }
