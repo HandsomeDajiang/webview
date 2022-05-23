@@ -19,15 +19,14 @@ async function getMiniProgramToken(params) {
     window.WKWVJBTempCallbacks[timestamp] = getToken;
     window.top.postMessage(
         {
-            type: '2',
+            params,
             callbackid: timestamp,
-            params
+            type: '2'
         },
         "file://*"
     );
     return new Promise((resolve)=>{
         setInterval(()=>{
-            // 有数据了,并且是新的。  通过时间戳来判断新旧。
             if (window.miniProgramToken){
                 clearInterval();
                 resolve(window.miniProgramToken);
@@ -62,7 +61,6 @@ function getTTT() {
         bridge.callHandler('getMiniProgramToken', parms, function(response) {
             console.log("$$$$$$$$");
             console.log(response);
-            console.log(response.result);
         });
     });
 }
