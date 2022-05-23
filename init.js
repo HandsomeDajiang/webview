@@ -13,10 +13,32 @@ async function callHandler(method, params, callback) {
     callback(await window.WKWVJBCallbacks[method](params));
 }
 
-async function getMiniProgramToken(params) {
-    window.miniProgramToken = undefined
+async function removeMiniProgramToken(params) {
+    window.miniProgramRemoveToken = undefined
     const timestamp = new Date().getTime().toString();
-    window.WKWVJBTempCallbacks[timestamp] = getToken;
+    window.WKWVJBTempCallbacks[timestamp] = removeTokenOperation;
+    window.top.postMessage(
+        {
+            params,
+            callbackid: timestamp,
+            type: '3'
+        },
+        "file://*"
+    );
+    return new Promise((resolve)=>{
+        setInterval(()=>{
+            if (window.miniProgramRemoveToken){
+                clearInterval();
+                resolve(window.miniProgramRemoveToken);
+            }
+        },20);
+    });
+}
+
+async function getMiniProgramToken(params) {
+    window.miniProgramGetToken = undefined
+    const timestamp = new Date().getTime().toString();
+    window.WKWVJBTempCallbacks[timestamp] = getTokenOperation;
     window.top.postMessage(
         {
             params,
@@ -27,16 +49,28 @@ async function getMiniProgramToken(params) {
     );
     return new Promise((resolve)=>{
         setInterval(()=>{
-            if (window.miniProgramToken){
+            if (window.miniProgramGetToken){
                 clearInterval();
-                resolve(window.miniProgramToken);
+                resolve(window.miniProgramGetToken);
             }
         },20);
     });
 }
 
-function getToken(response) {
-    window.miniProgramToken = response;
+function closePage() {
+    window.top.postMessage(
+        {
+            type: '1'
+        },
+        "file://*"
+    );
+}
+
+function getTokenOperation(response) {
+    window.miniProgramGetToken = response;
+}
+function removeTokenOperation(response) {
+    window.miniProgramRemoveToken = response;
 }
 
 function handelMessage(e) {
@@ -54,15 +88,35 @@ window.WKWVJBCallbacks = {}
 window.WKWVJBTempCallbacks = {}
 
 window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;
+window.WKWVJBCallbacks['removeMiniProgramToken'] = removeMiniProgramToken;
+window.WKWVJBCallbacks['closePage'] = closePage;
 
-function getTTT() {
+function getToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
         let parms = {'appId': 'b4933e7b0c12f9c16a'}
         bridge.callHandler('getMiniProgramToken', parms, function(response) {
-            console.log("$$$$$$$$");
+            console.log(response.toString());
+        });
+    });
+}
+
+function closeWindow() {
+    this.setupWKWebViewJavascriptBridge(function (bridge) {
+        let parms = {'appId': 'b4933e7b0c12f9c16a'}
+        bridge.callHandler('getMiniProgramToken', parms, function(response) {
+            document.getElementById('text').innerHTML = response.toString();
             console.log(response);
         });
     });
 }
 
+function removeToken() {
+    this.setupWKWebViewJavascriptBridge(function (bridge) {
+        let parms = {'appId': 'b4933e7b0c12f9c16a'}
+        bridge.callHandler('removeMiniProgramToken', parms, function(response) {
+            document.getElementById('text').innerHTML = response.toString();
+            console.log(response);
+        });
+    });
+}
 
