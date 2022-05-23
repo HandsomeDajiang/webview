@@ -1,5 +1,5 @@
 window.onload = function(){
-    this.setupWKWebViewJavascriptBridge = (callback) => {
+    const setupWKWebViewJavascriptBridge = (callback) => {
         if (window.WKWebViewJavascriptBridge) {
             return callback(window.WKWebViewJavascriptBridge);
         }
