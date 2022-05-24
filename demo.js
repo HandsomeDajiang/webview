@@ -68,6 +68,7 @@ class Bridge {
         window.TARGET_ORIGIN =  "file://*";
         window.onmessage = this.handelMessage;
         window.setupWKWebViewJavascriptBridge = this.setupWKWebViewJavascriptBridge;
+        this.callHandler = this.callHandler.bind(this);
     }
     setupWKWebViewJavascriptBridge(callback) {
         if (window.WKWebViewJavascriptBridge) {
@@ -92,8 +93,7 @@ class Bridge {
         window.WKWVJBCallbacks[callbackid] = response;
     }
     async callHandler(methodName, params, callback) {
-        const response = await Bridge.postmessage(methodName,params)
-        callback(response);
+        callback(await this.postmessage(methodName,params));
     }
     async postmessage(methodName, params) {
         window.WKWVJBCallbacks = {};
