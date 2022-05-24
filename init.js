@@ -51,6 +51,7 @@ function responseTempOperation(response, callbackid) {
 
 function handelMessage(e) {
     console.log("收到了回调");
+    console.log(e.data);
     const { callbackid, status } = e.data.response || {}
 
     if (status && status === 400) {
