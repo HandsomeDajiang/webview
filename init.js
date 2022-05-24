@@ -5,7 +5,7 @@ window.WKWebViewJavascriptBridge = {
 };
 
 async function callHandler(methodName, params, callback) {
-    params ? callback(await postmessageWithParams(methodName,params)) : callback(postmessageWithoutParams(methodName));
+    callback(await postmessageWithParams(methodName,params));
 }
 
 function setupWKWebViewJavascriptBridge(callback) {
@@ -29,6 +29,7 @@ async function postmessageWithParams(methodName, params) {
         message,
         TARGET_ORIGIN
     );
+
     return new Promise((resolve)=>{
         setInterval(()=>{
             if (window.WKWVJBCallbacks[callbackid]){
@@ -37,15 +38,6 @@ async function postmessageWithParams(methodName, params) {
             }
         },20);
     });
-}
-function postmessageWithoutParams(methodName) {
-    const message = {
-        methodName,
-    }
-    window.top.postMessage(
-        message,
-        TARGET_ORIGIN
-    );
 }
 
 function responseTempOperation(response, callbackid) {
@@ -95,7 +87,7 @@ function removeToken() {
 
 function closeWindow() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
-        bridge.callHandler('closePage', undefined, function(response) {
+        bridge.callHandler('closePage', null, function(response) {
             if (response) {
                 console.log(response);
             }
