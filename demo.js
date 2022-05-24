@@ -93,7 +93,7 @@ function setupWKWebViewJavascriptBridge(callback) {
 }
 
 async function callHandler(methodName, params, callback) {
-    callback(await this.postmessage(methodName,params));
+    callback(await postmessage(methodName,params));
 }
 
 async function postmessage(methodName, params) {
