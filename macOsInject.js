@@ -1,5 +1,6 @@
 const TARGET_ORIGIN = "file://*";
 
+// 初始化
 function macOsInjectWKWebViewJavascriptBridge() {
     window.WKWVJBCallbacks = {}
     window.onmessage = handelMessage;
@@ -9,6 +10,7 @@ function macOsInjectWKWebViewJavascriptBridge() {
     window.setupWKWebViewJavascriptBridge = setupWKWebViewJavascriptBridge
 }
 
+// 处理回调
 function handelMessage(e){
     const { callbackid, response } = e.data || {}
     const { status } = response || {}
@@ -32,20 +34,25 @@ function handelMessage(e){
         return responseTempOperation(response, callbackid);
     }
 
-    console.log("9999999");
     window.clearInterval();
 }
 
+// 回调数据临时存储
 function responseTempOperation(response, callbackid) {
     window.WKWVJBCallbacks[callbackid] = response;
 }
 
-
+// getToken、removeToken、closePage 等触发事件
 async function callHandler(methodName, params, callback) {
     callback(await postmessage(methodName,params));
 }
 
+// postmessage
 async function postmessage(methodName, params) {
+    if (!methodName) {
+        alert("methodName could not be empty！");
+        return ;
+    }
     window.WKWVJBCallbacks = {};
     const callbackid = new Date().getTime().toString();
     const message = {

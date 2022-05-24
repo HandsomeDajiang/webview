@@ -6,7 +6,6 @@
 </head>
 <script src="macOsInject.js"></script>
 <script src="test.js"></script>
-<script src="demo.js"></script>
 <body>
     <div>
         <button onclick="closeWindow()">关闭窗口</button>
@@ -20,15 +19,13 @@
 </html>
 <script>
     function setupWKWebViewJavascriptBridge(callback) {
-        // TODO 判断设备
-        const xxx = navigator.userAgent;
-        console.log("$%$%$%$%$%$%$%$%%$%$%$%$%$");
-        console.log(xxx);
-        if (mac){
+        // TODO 判断设备  这边临时简单判断。
+        const ua = navigator.userAgent;
+        if (ua.split('Mac').length > 1){
             macOsInjectWKWebViewJavascriptBridge();
             return callback(window.WKWebViewJavascriptBridge);
         }
-
+        
         if (window.WKWebViewJavascriptBridge) {
             return callback(window.WKWebViewJavascriptBridge);
         }
