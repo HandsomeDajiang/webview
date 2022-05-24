@@ -33,9 +33,9 @@ async function postmessage(methodName, params) {
     );
     console.log("postmessage发送了消息");
     return new Promise((resolve)=>{
-        setInterval(()=>{
+        const timer = setInterval(()=>{
             if (window.WKWVJBCallbacks[callbackid]){
-                clearInterval();
+                clearInterval(timer);
                 console.log("有数据了！");
                 resolve(window.WKWVJBCallbacks[callbackid]);
             }
