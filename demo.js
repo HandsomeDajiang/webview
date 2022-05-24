@@ -68,6 +68,13 @@ class Bridge {
         window.TARGET_ORIGIN =  "file://*";
         window.onmessage = this.handelMessage;
         window.setupWKWebViewJavascriptBridge = this.setupWKWebViewJavascriptBridge;
+        this.bind();
+    }
+    bind(){
+        this.postmessage = this.postmessage.bind(this);
+        this.handelMessage = this.handelMessage.bind(this);
+        this.responseTempOperation = this.responseTempOperation.bind(this);
+        this.setupWKWebViewJavascriptBridge = this.setupWKWebViewJavascriptBridge.bind(this);
     }
     setupWKWebViewJavascriptBridge(callback) {
         if (window.WKWebViewJavascriptBridge) {
