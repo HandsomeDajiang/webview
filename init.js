@@ -35,11 +35,11 @@ async function postmessage(methodName, params) {
     return new Promise((resolve)=>{
         setInterval(()=>{
             if (window.WKWVJBCallbacks[callbackid]){
-                console.log("有数据了！")
                 clearInterval();
+                console.log("有数据了！");
                 resolve(window.WKWVJBCallbacks[callbackid]);
             }
-        },20);
+        },100);
     });
 }
 
