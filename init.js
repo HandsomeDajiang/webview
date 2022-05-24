@@ -20,7 +20,7 @@ function setupWKWebViewJavascriptBridge(callback) {
 async function postmessage(methodName, params) {
     window.WKWVJBCallbacks = {};
     const callbackid = new Date().getTime().toString();
-
+    console.log("进入postmessage方法");
     const message = {
         params,
         callbackid,
@@ -31,10 +31,11 @@ async function postmessage(methodName, params) {
         message,
         TARGET_ORIGIN
     );
-
+    console.log("postmessage发送了消息");
     return new Promise((resolve)=>{
         setInterval(()=>{
             if (window.WKWVJBCallbacks[callbackid]){
+                console.log("有数据了！")
                 clearInterval();
                 resolve(window.WKWVJBCallbacks[callbackid]);
             }
@@ -43,10 +44,13 @@ async function postmessage(methodName, params) {
 }
 
 function responseTempOperation(response, callbackid) {
+    console.log("处理回调");
     window.WKWVJBCallbacks[callbackid] = response;
+    console.log("存储的数据为:" + window.WKWVJBCallbacks[callbackid])
 }
 
 function handelMessage(e) {
+    console.log("收到了回调");
     const { callbackid, status } = e.data.response || {}
 
     if (status && status === 400) {
@@ -64,6 +68,7 @@ function getToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
         let params = {'appId': 'b4933e7b0c12f9c16a'}
         bridge.callHandler('getMiniProgramToken', params, function(response) {
+            console.log("回来的数据：" + response)
             if (response) {
                 console.log("##########");
                 console.log(response);
