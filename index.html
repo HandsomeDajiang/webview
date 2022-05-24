@@ -19,13 +19,6 @@
 </html>
 <script>
     function setupWKWebViewJavascriptBridge(callback) {
-        // TODO 判断设备  这边临时简单判断。
-        const ua = navigator.userAgent;
-        if (ua.split('Mac').length > 1){
-            macOsInjectWKWebViewJavascriptBridge();
-            return callback(window.WKWebViewJavascriptBridge);
-        }
-        
         if (window.WKWebViewJavascriptBridge) {
             return callback(window.WKWebViewJavascriptBridge);
         }
@@ -36,6 +29,13 @@
         window.webkit.messageHandlers.iOS_Native_InjectJavascript.postMessage(null);
     }
     window.onload = function () {
+
+        // TODO 判断设备 IOS 或者 MacOS  这边临时简单判断。
+        const ua = navigator.userAgent;
+        if (ua.split('Mac').length > 1){
+            macOsInjectWKWebViewJavascriptBridge(); // 用于 Mac 端 初始化 WKWebViewJavascriptBridge 对象。
+        }
+
         setupWKWebViewJavascriptBridge(function(bridge) {
             let parms = {'appId': 'b4933e7b0c12f9c16a'}
             bridge.callHandler('getMiniProgramToken', parms, function(response) {
