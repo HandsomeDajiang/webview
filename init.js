@@ -1,4 +1,6 @@
 const TARGET_ORIGIN = "file://*";
+window.onmessage = handelMessage;
+window.WKWVJBCallbacks = {}
 
 window.WKWebViewJavascriptBridge = {
     callHandler: callHandler,
@@ -57,9 +59,6 @@ function handelMessage(e) {
         responseTempOperation(e.data.response, callbackid);
     }
 }
-
-window.onmessage = handelMessage;
-window.WKWVJBCallbacks = {}
 
 function getToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
