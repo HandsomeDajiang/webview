@@ -8,18 +8,32 @@ function macOsInjectWKWebViewJavascriptBridge() {
     };
     window.setupWKWebViewJavascriptBridge = setupWKWebViewJavascriptBridge
 }
+
 function handelMessage(e){
     const { callbackid, response } = e.data || {}
     const { status } = response || {}
-    if (status && status === 400) {
-        clearInterval();
-        alert('error');
+
+    if (!status) {
+        window.clearInterval();
+        alert('error callback data!');
         return
     }
 
-    if (callbackid){
-        responseTempOperation(response, callbackid);
+    switch (status) {
+        case 400:
+            alert('error 400');
+            window.clearInterval();
+            return;
+        default:
+            console.log('continue...');
     }
+
+    if (callbackid){
+        return responseTempOperation(response, callbackid);
+    }
+
+    console.log("9999999");
+    window.clearInterval();
 }
 
 function responseTempOperation(response, callbackid) {
