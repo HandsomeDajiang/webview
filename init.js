@@ -5,7 +5,7 @@ window.WKWebViewJavascriptBridge = {
 };
 
 async function callHandler(methodName, params, callback) {
-    callback(await postmessageWithParams(methodName,params));
+    callback(await postmessage(methodName,params));
 }
 
 function setupWKWebViewJavascriptBridge(callback) {
@@ -15,7 +15,7 @@ function setupWKWebViewJavascriptBridge(callback) {
     return null;
 }
 
-async function postmessageWithParams(methodName, params) {
+async function postmessage(methodName, params) {
     window.WKWVJBCallbacks = {};
     const callbackid = new Date().getTime().toString();
 
@@ -63,9 +63,10 @@ window.WKWVJBCallbacks = {}
 
 function getToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
-        let parms = {'appId': 'b4933e7b0c12f9c16a'}
-        bridge.callHandler('getMiniProgramToken', parms, function(response) {
+        let params = {'appId': 'b4933e7b0c12f9c16a'}
+        bridge.callHandler('getMiniProgramToken', params, function(response) {
             if (response) {
+                console.log("##########");
                 console.log(response);
                 const { status, token } = response;
                 document.getElementById('text').innerHTML = token
@@ -76,8 +77,8 @@ function getToken() {
 
 function removeToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
-        let parms = {'appId': 'b4933e7b0c12f9c16a'}
-        bridge.callHandler('removeMiniProgramToken', parms, function(response) {
+        let params = {'appId': 'b4933e7b0c12f9c16a'}
+        bridge.callHandler('removeMiniProgramToken', params, function(response) {
             if (response) {
                 console.log(response);
             }
