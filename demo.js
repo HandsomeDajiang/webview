@@ -68,13 +68,6 @@ class Bridge {
         window.TARGET_ORIGIN =  "file://*";
         window.onmessage = this.handelMessage;
         window.setupWKWebViewJavascriptBridge = this.setupWKWebViewJavascriptBridge;
-        this.bind();
-    }
-    bind(){
-        this.postmessage = this.postmessage.bind(this);
-        this.handelMessage = this.handelMessage.bind(this);
-        this.responseTempOperation = this.responseTempOperation.bind(this);
-        this.setupWKWebViewJavascriptBridge = this.setupWKWebViewJavascriptBridge.bind(this);
     }
     setupWKWebViewJavascriptBridge(callback) {
         if (window.WKWebViewJavascriptBridge) {
@@ -99,7 +92,8 @@ class Bridge {
         window.WKWVJBCallbacks[callbackid] = response;
     }
     async callHandler(methodName, params, callback) {
-        callback(await this.postmessage(methodName,params));
+        const response = await Bridge.postmessage(methodName,params)
+        callback(response);
     }
     async postmessage(methodName, params) {
         window.WKWVJBCallbacks = {};
@@ -114,6 +108,7 @@ class Bridge {
             message,
             window.TARGET_ORIGIN
         );
+
         return new Promise((resolve)=>{
             const timer = setInterval(()=>{
                 if (window.WKWVJBCallbacks[callbackid]){
