@@ -26,6 +26,7 @@ function responseTempOperation(response, callbackid) {
     window.WKWVJBCallbacks[callbackid] = response;
 }
 
+
 async function callHandler(methodName, params, callback) {
     callback(await postmessage(methodName,params));
 }
