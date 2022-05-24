@@ -1,9 +1,11 @@
+const TARGET_ORIGIN = "file://*";
+
 window.WKWebViewJavascriptBridge = {
     callHandler: callHandler,
 };
 
-async function callHandler(method, params, callback) {
-    params ? callback(await window.WKWVJBCallbacks[method](params)) : callback(await window.WKWVJBCallbacks[method]());
+async function callHandler(methodName, params, callback) {
+    params ? callback(await postmessageWithParams(methodName,params)) : callback(postmessageWithoutParams(methodName));
 }
 
 function setupWKWebViewJavascriptBridge(callback) {
@@ -13,69 +15,45 @@ function setupWKWebViewJavascriptBridge(callback) {
     return null;
 }
 
-async function removeMiniProgramToken(params) {
-    window.miniProgramRemoveToken = undefined
-    const timestamp = new Date().getTime().toString();
-    window.WKWVJBTempCallbacks[timestamp] = removeTokenOperation;
+async function postmessageWithParams(methodName, params) {
+    window.WKWVJBCallbacks = {};
+    const callbackid = new Date().getTime().toString();
+
+    const message = {
+        params,
+        callbackid,
+        methodName,
+    }
+
     window.top.postMessage(
-        {
-            params,
-            callbackid: timestamp,
-            type: '3'
-        },
-        "file://*"
+        message,
+        TARGET_ORIGIN
     );
     return new Promise((resolve)=>{
         setInterval(()=>{
-            if (window.miniProgramRemoveToken){
+            if (window.WKWVJBCallbacks[callbackid]){
                 clearInterval();
-                resolve(window.miniProgramRemoveToken);
+                resolve(window.WKWVJBCallbacks[callbackid]);
             }
         },20);
     });
 }
-
-async function getMiniProgramToken(params) {
-    window.miniProgramGetToken = undefined
-    const timestamp = new Date().getTime().toString();
-    window.WKWVJBTempCallbacks[timestamp] = getTokenOperation;
+function postmessageWithoutParams(methodName) {
+    const message = {
+        methodName,
+    }
     window.top.postMessage(
-        {
-            params,
-            callbackid: timestamp,
-            type: '2'
-        },
-        "file://*"
-    );
-    return new Promise((resolve)=>{
-        setInterval(()=>{
-            if (window.miniProgramGetToken){
-                clearInterval();
-                resolve(window.miniProgramGetToken);
-            }
-        },20);
-    });
-}
-
-function closePage() {
-    window.top.postMessage(
-        {
-            type: '1'
-        },
-        "file://*"
+        message,
+        TARGET_ORIGIN
     );
 }
 
-function getTokenOperation(response) {
-    window.miniProgramGetToken = response;
-}
-
-function removeTokenOperation(response) {
-    window.miniProgramRemoveToken = response;
+function responseTempOperation(response, callbackid) {
+    window.WKWVJBCallbacks[callbackid] = response;
 }
 
 function handelMessage(e) {
-    const { callbackid, status } = e.data || {}
+    const { callbackid, status } = e.data.response || {}
 
     if (status && status === 400) {
         clearInterval();
@@ -84,20 +62,12 @@ function handelMessage(e) {
     }
 
     if (callbackid){
-        window.WKWVJBTempCallbacks[callbackid](e.data.response);
+        responseTempOperation(e.data.response, callbackid);
     }
-
-    // 执行完回调后清空 WKWVJBTempCallbacks 避免无限添加。
-    window.WKWVJBTempCallbacks = {}
 }
 
 window.onmessage = handelMessage;
 window.WKWVJBCallbacks = {}
-window.WKWVJBTempCallbacks = {}
-
-window.WKWVJBCallbacks['getMiniProgramToken'] = getMiniProgramToken;
-window.WKWVJBCallbacks['removeMiniProgramToken'] = removeMiniProgramToken;
-window.WKWVJBCallbacks['closePage'] = closePage;
 
 function getToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
@@ -125,7 +95,7 @@ function removeToken() {
 
 function closeWindow() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
-        bridge.callHandler('closePage', null, function(response) {
+        bridge.callHandler('closePage', undefined, function(response) {
             if (response) {
                 console.log(response);
             }
