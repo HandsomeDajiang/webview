@@ -52,8 +52,8 @@ function responseTempOperation(response, callbackid) {
 function handelMessage(e) {
     console.log("收到了回调");
     console.log(e.data);
-    const { callbackid, status } = e.data.response || {}
-
+    const { callbackid, response } = e.data || {}
+    const { status } = response || {}
     if (status && status === 400) {
         clearInterval();
         alert('error');
@@ -61,8 +61,9 @@ function handelMessage(e) {
     }
 
     if (callbackid){
-        responseTempOperation(e.data.response, callbackid);
+        responseTempOperation(response, callbackid);
     }
+
 }
 
 function getToken() {
