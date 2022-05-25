@@ -16,7 +16,7 @@ function macOsInjectWKWebViewJavascriptBridge() {
 
 // 处理postmessage回调
 function handelMessage(e){
-    console.log('iframe receive postmessage data: ' + e.data);
+    console.log('iframe receive postmessage data: ' + JSON.stringify(e.data));
     const { callbackid, response } = e.data || {}
     const { status } = response || {}
 
@@ -85,6 +85,7 @@ async function postmessage(methodName, params) {
             console.log('into Interval timer,timer_id: ' + timer.toString());
             if (window.WKWVJBCallbacks[callbackid]){
                 clearInterval(timer);
+                console.log('get postmessage data,clear local interval timer, timer_id : ' + timer.toString());
                 resolve(window.WKWVJBCallbacks[callbackid]);
             }
         },100);
