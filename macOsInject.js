@@ -12,6 +12,7 @@ function macOsInjectWKWebViewJavascriptBridge() {
 
 // 处理回调
 function handelMessage(e){
+    console.log(e.data)
     const { callbackid, response } = e.data || {}
     const { status } = response || {}
 

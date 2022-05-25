@@ -6,8 +6,8 @@ function getToken() {
             if (response) {
                 console.log("##########");
                 console.log(response);
-                const { status, token } = response;
-                document.getElementById('text').innerHTML = token
+                const { status, data } = response;
+                document.getElementById('text').innerHTML = data
             }
         });
     });
