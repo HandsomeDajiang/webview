@@ -3,30 +3,37 @@ const TARGET_ORIGIN = "file://*";
 // 初始化
 function macOsInjectWKWebViewJavascriptBridge() {
     window.WKWVJBCallbacks = {}
+    console.log('WKWVJBCallbacks init done.');
     window.localTimer = 0
+    console.log('localTimer init done.');
     window.onmessage = handelMessage;
     window.WKWebViewJavascriptBridge = {
         callHandler: callHandler,
     };
+    console.log('WKWebViewJavascriptBridge init done.');
     window.setupWKWebViewJavascriptBridge = setupWKWebViewJavascriptBridge
 }
 
 // 处理postmessage回调
 function handelMessage(e){
-    console.log(e.data)
+    console.log('iframe receive postmessage data: ' + e.data);
     const { callbackid, response } = e.data || {}
     const { status } = response || {}
 
     if (!status) {
+        console.log('receive data no status imformation.');
         clearInterval(window.localTimer);
-        alert('error callback data!');
+        console.log('clear local Interval timer, timer_id: ' + window.localTimer.toString());
+        alert('error postmessage data receive!');
         return;
     }
-
+    
     switch (status) {
         case 400:
-            alert('error 400');
+            console.log('error 400');
             clearInterval(window.localTimer);
+            console.log('clear local Interval timer, timer_id: ' + window.localTimer.toString());
+            alert('error 400');
             return;
         default:
             console.log('continue...');
@@ -37,6 +44,7 @@ function handelMessage(e){
     }
 
     clearInterval(window.localTimer);
+    console.log('clear local Interval timer, timer_id: ' + window.localTimer.toString());
 }
 
 // 回调数据临时存储
@@ -46,12 +54,14 @@ function responseTempOperation(response, callbackid) {
 
 // getToken、removeToken、closePage 等触发事件
 async function callHandler(methodName, params, callback) {
+    console.log('received a post request, trigger callHandler.');
     callback(await postmessage(methodName,params));
 }
 
 // postmessage
 async function postmessage(methodName, params) {
     if (!methodName) {
+        console.log('post request without methodName.');
         alert("methodName could not be empty！");
         return ;
     }
@@ -67,10 +77,12 @@ async function postmessage(methodName, params) {
         message,
         TARGET_ORIGIN
     );
+    console.log('post request data:' + JSON.stringify(message) + ' & targetOrigin:' + TARGET_ORIGIN);
 
     return new Promise((resolve)=>{
         const timer = setInterval(()=>{
             window.localTimer = timer;
+            console.log('into Interval timer,timer_id: ' + timer.toString());
             if (window.WKWVJBCallbacks[callbackid]){
                 clearInterval(timer);
                 resolve(window.WKWVJBCallbacks[callbackid]);
