@@ -34,6 +34,7 @@
         const ua = navigator.userAgent;
         if (ua.split('Mac').length > 1){
             macOsInjectWKWebViewJavascriptBridge(); // 用于 Mac 端 初始化 WKWebViewJavascriptBridge 对象。
+            return;
         }
 
         setupWKWebViewJavascriptBridge(function(bridge) {
