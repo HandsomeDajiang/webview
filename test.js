@@ -5,8 +5,7 @@ function getToken() {
             console.log("回来的数据：" + response);
             if (response) {
                 console.log(response);
-                const { data } = response;
-                document.getElementById('text').innerHTML = data
+                document.getElementById('text').innerHTML = JSON.stringify(response);
             }
         });
     });
@@ -18,8 +17,7 @@ function removeToken() {
         bridge.callHandler('removeMiniProgramToken', params, function(response) {
             if (response) {
                 console.log(response);
-                const { data } = response;
-                document.getElementById('text').innerHTML = data
+                document.getElementById('text').innerHTML = JSON.stringify(response);
             }
         });
     });
@@ -30,8 +28,7 @@ function closeWindow() {
         bridge.callHandler('closePage', null, function(response) {
             if (response) {
                 console.log(response);
-                const { data } = response;
-                document.getElementById('text').innerHTML = data
+                document.getElementById('text').innerHTML = JSON.stringify(response);
             }
         });
     });
