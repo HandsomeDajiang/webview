@@ -3,6 +3,7 @@ const TARGET_ORIGIN = "file://*";
 // 初始化
 function macOsInjectWKWebViewJavascriptBridge() {
     window.WKWVJBCallbacks = {}
+    window.localTimer = 0
     window.onmessage = handelMessage;
     window.WKWebViewJavascriptBridge = {
         callHandler: callHandler,
@@ -17,7 +18,7 @@ function handelMessage(e){
     const { status } = response || {}
 
     if (!status) {
-        window.clearInterval();
+        clearInterval(window.localTimer);
         alert('error callback data!');
         return;
     }
@@ -25,7 +26,7 @@ function handelMessage(e){
     switch (status) {
         case 400:
             alert('error 400');
-            window.clearInterval();
+            clearInterval(window.localTimer);
             return;
         default:
             console.log('continue...');
@@ -35,7 +36,7 @@ function handelMessage(e){
         return responseTempOperation(response, callbackid);
     }
 
-    window.clearInterval();
+    clearInterval(window.localTimer);
 }
 
 // 回调数据临时存储
@@ -69,6 +70,7 @@ async function postmessage(methodName, params) {
 
     return new Promise((resolve)=>{
         const timer = setInterval(()=>{
+            window.localTimer = timer;
             if (window.WKWVJBCallbacks[callbackid]){
                 clearInterval(timer);
                 resolve(window.WKWVJBCallbacks[callbackid]);
