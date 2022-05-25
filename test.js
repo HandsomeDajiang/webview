@@ -2,7 +2,6 @@ function getToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
         let params = {'appId': 'b4933e7b0c12f9c16a'}
         bridge.callHandler('getMiniProgramToken', params, function(response) {
-            console.log("回来的数据：" + response);
             if (response) {
                 console.log(response);
                 document.getElementById('text').innerHTML = JSON.stringify(response);
