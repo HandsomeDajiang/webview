@@ -10,7 +10,7 @@ function macOsInjectWKWebViewJavascriptBridge() {
     window.setupWKWebViewJavascriptBridge = setupWKWebViewJavascriptBridge
 }
 
-// 处理回调
+// 处理postmessage回调
 function handelMessage(e){
     console.log(e.data)
     const { callbackid, response } = e.data || {}
@@ -19,7 +19,7 @@ function handelMessage(e){
     if (!status) {
         window.clearInterval();
         alert('error callback data!');
-        return
+        return;
     }
 
     switch (status) {
