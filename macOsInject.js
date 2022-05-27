@@ -1,7 +1,7 @@
 const TARGET_ORIGIN = "file://*";
 
 // 初始化
-function macOsInjectWKWebViewJavascriptBridge() {
+function macOsInjectWKWebViewJavascriptBridge(func) {
     window.WKWVJBCallbacks = {}
     console.log('WKWVJBCallbacks init done.');
     window.localTimer = 0
@@ -11,7 +11,7 @@ function macOsInjectWKWebViewJavascriptBridge() {
         callHandler: callHandler,
     };
     console.log('WKWebViewJavascriptBridge init done.');
-    window.setupWKWebViewJavascriptBridge = setupWKWebViewJavascriptBridge
+    window.setupWKWebViewJavascriptBridge = func;
 }
 
 // 处理postmessage回调
