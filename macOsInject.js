@@ -1,4 +1,4 @@
-const TARGET_ORIGIN = "file://*";
+const TARGET_ORIGIN = "localhost://127.0.0.1";
 
 // 初始化
 function macOsInjectWKWebViewJavascriptBridge(func) {

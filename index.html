@@ -18,41 +18,41 @@
 </body>
 </html>
 <script>
-    // function isMac() {
-    //     // TODO 根据 UA 信息判断设备 IOS 或者 MacOS  这边临时简单判断。
-    //     return navigator.userAgent.includes('Mac');
-    // }
-    // function setupWKWebViewJavascriptBridge(callback) {
-    //     if (isMac()){
-    //         if (!window.WKWebViewJavascriptBridge) {
-    //             throw new Error('must be inject macOsInject.js');
-    //         }
-    //         return callback(window.WKWebViewJavascriptBridge)
-    //     }
-    //     if (window.WKWebViewJavascriptBridge) {
-    //         return callback(window.WKWebViewJavascriptBridge);
-    //     }
-    //     if (window.WKWVJBCallbacks) {
-    //         return window.WKWVJBCallbacks.push(callback);
-    //     }
-    //     window.WKWVJBCallbacks = [callback];
-    //     window.webkit.messageHandlers.iOS_Native_InjectJavascript.postMessage(null);
-    // }
-    //
-    // window.onload = function () {
-    //
-    //     if (isMac()){
-    //         // 此方法需要 引入 macOsInject 后才生效。
-    //         macOsInjectWKWebViewJavascriptBridge(setupWKWebViewJavascriptBridge);
-    //     }
-    //
-    //     // IOS ，onload 中注册  window.WKWebViewJavascriptBridge 对象。
-    //     setupWKWebViewJavascriptBridge(function(bridge) {
-    //         const parmas = {'appId': 'b4933e7b0c12f9c16a'}
-    //         bridge.callHandler('getMiniProgramToken', parmas, function(response) {
-    //
-    //         });
-    //     });
-    // }
+    function isMac() {
+        // TODO 根据 UA 信息判断设备 IOS 或者 MacOS  这边临时简单判断。
+        return navigator.userAgent.includes('Mac');
+    }
+    function setupWKWebViewJavascriptBridge(callback) {
+        if (isMac()){
+            if (!window.WKWebViewJavascriptBridge) {
+                throw new Error('must be inject macOsInject.js');
+            }
+            return callback(window.WKWebViewJavascriptBridge)
+        }
+        if (window.WKWebViewJavascriptBridge) {
+            return callback(window.WKWebViewJavascriptBridge);
+        }
+        if (window.WKWVJBCallbacks) {
+            return window.WKWVJBCallbacks.push(callback);
+        }
+        window.WKWVJBCallbacks = [callback];
+        window.webkit.messageHandlers.iOS_Native_InjectJavascript.postMessage(null);
+    }
+
+    window.onload = function () {
+
+        if (isMac()){
+            // 此方法需要 引入 macOsInject 后才生效。
+            macOsInjectWKWebViewJavascriptBridge(setupWKWebViewJavascriptBridge);
+        }
+
+        // IOS ，onload 中注册  window.WKWebViewJavascriptBridge 对象。
+        setupWKWebViewJavascriptBridge(function(bridge) {
+            const parmas = {'appId': 'b4933e7b0c12f9c16a'}
+            bridge.callHandler('getMiniProgramToken', parmas, function(response) {
+
+            });
+        });
+    }
 </script>
 
