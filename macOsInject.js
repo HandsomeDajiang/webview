@@ -17,7 +17,10 @@ function macOsInjectWKWebViewJavascriptBridge(func) {
 // 处理postmessage回调
 function handelMessage(e){
     // TODO 接收的消息 origin 校验
-    if (!e.origin || e.origin.length === 0 || e.origin !== '"file://"') {
+    console.log('&*&*&*&*&*&');
+    console.log(e.origin);
+    if (!e.origin || e.origin.length === 0 || e.origin !== "file://") {
+        clearInterval(window.localTimer);
         alert('Receive Unknown Origin Message!');
         return ;
     }
