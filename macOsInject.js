@@ -1,4 +1,4 @@
-const TARGET_ORIGIN = "*";
+const TARGET_ORIGIN = "file://*";
 
 // 初始化
 function macOsInjectWKWebViewJavascriptBridge(func) {
@@ -16,6 +16,12 @@ function macOsInjectWKWebViewJavascriptBridge(func) {
 
 // 处理postmessage回调
 function handelMessage(e){
+    // TODO 接收的消息 origin 校验
+    if (!e.origin || e.origin.length === 0 || e.origin !== '"file://"') {
+        alert('Receive Unknown Origin Message!');
+        return ;
+    }
+
     console.log('iframe receive postmessage data: ' + JSON.stringify(e.data));
     const { callbackid, response } = e.data || {}
     const { status } = response || {}
@@ -27,7 +33,7 @@ function handelMessage(e){
         alert('error postmessage data receive!');
         return;
     }
-    
+
     switch (status) {
         case 400:
             console.log('error 400');
