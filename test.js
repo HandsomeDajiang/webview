@@ -18,6 +18,11 @@ function getToken() {
     );
 }
 
+window.onload = function(){
+    console.error("^&%&^%&%&%^&%&^%&%&%%&^%^&%^&%&%&^%&%&^%&%%");
+    console.error(window.top);
+}
+
 window.onmessage = handelMessage;
 
 function handelMessage(e){
