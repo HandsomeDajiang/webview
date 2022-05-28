@@ -18,6 +18,12 @@ function getToken() {
     );
 }
 
+window.onmessage = handelMessage;
+
+function handelMessage(e){
+    console.log(e);
+}
+
 function removeToken() {
     this.setupWKWebViewJavascriptBridge(function (bridge) {
         let params = {'appId': 'b4933e7b0c12f9c16a'}
