@@ -21,7 +21,8 @@ function getToken() {
 window.onmessage = handelMessage;
 
 function handelMessage(e){
-    console.log(e);
+    console.error("^&%&^%&%&%^&%&^%&%&%%&^%^&%^&%&%&^%&%&^%&%%");
+    console.error(e);
 }
 
 function removeToken() {
