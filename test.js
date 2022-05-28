@@ -8,6 +8,10 @@ function getToken() {
     //         }
     //     });
     // });
+    // window.top.postMessage(
+    //     "发送的消息",
+    //     "*"
+    // );
     window.top.postMessage(
         "发送的消息",
         "*"
