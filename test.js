@@ -12,6 +12,7 @@ function getToken() {
     //     "发送的消息",
     //     "*"
     // );
+    console.error(window.top);
     window.top.postMessage(
         "发送的消息",
         "*"
