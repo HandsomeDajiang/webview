@@ -12,7 +12,8 @@ function getToken() {
     //     "发送的消息",
     //     "*"
     // );
-    console.error(window.top);
+    console.log("^&^&^&^&^&^&^&^^&^&^&^&");
+    console.log(window.top);
     window.top.postMessage(
         "发送的消息",
         "*"
