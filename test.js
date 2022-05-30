@@ -25,12 +25,10 @@ function getToken() {
 
 
 window.onload = function(){
-    console.error("^&%&^%&%&%^&%&^%&%&%%&^%^&%^&%&%&^%&%&^%&%%");
-    console.error(window.top);
-
     const socket = new WebSocket("ws://localhost:9090");
 
     socket.onopen = () => {
+        console.error("^&%&^%&%&%^&%&^%&%&%%&^%^&%^&%&%&^%&%&^%&%%");
         socket.send("Hello! i am aaa");
     };
 
