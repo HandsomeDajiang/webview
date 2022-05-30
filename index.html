@@ -45,6 +45,15 @@
         if (isMac()){
             // 此方法需要 引入 macOsInject 后才生效。
             macOsInjectWKWebViewJavascriptBridge(setupWKWebViewJavascriptBridge);
+
+            // chu shi hua title
+            setupWKWebViewJavascriptBridge(function(bridge) {
+                const title = document.title
+                const params = {title}
+                bridge.callHandler('setTitle', params, function(response) {
+
+                });
+            });
         }
 
         // IOS ，onload 中注册  window.WKWebViewJavascriptBridge 对象。
