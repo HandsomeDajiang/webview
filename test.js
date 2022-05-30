@@ -1,4 +1,4 @@
 function getToken() {
-    window.getToken();
+    window.fromWebToElectron();
 }
 
