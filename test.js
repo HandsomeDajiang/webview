@@ -18,11 +18,25 @@ function getToken() {
         "发送的消息",
         "*"
     );
+
 }
+
+
+
 
 window.onload = function(){
     console.error("^&%&^%&%&%^&%&^%&%&%%&^%^&%^&%&%&^%&%&^%&%%");
     console.error(window.top);
+
+    const socket = new WebSocket("ws://localhost:9090");
+
+    socket.onopen = () => {
+        socket.send("Hello! i am aaa");
+    };
+
+    socket.onmessage = (data) => {
+        console.log(data);
+    };
 }
 
 window.onmessage = handelMessage;
