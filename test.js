@@ -6,7 +6,15 @@ function getToken() {
 
 
 window.onload = function(){
+    const socket = new WebSocket("ws://localhost:9999");
 
+    socket.onopen = () => {
+        socket.send("Hello! i am aaa");
+    };
+
+    socket.onmessage = (data) => {
+        console.log(data);
+    };
 }
 
 window.onmessage = handelMessage;
