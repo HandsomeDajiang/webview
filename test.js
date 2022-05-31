@@ -1,4 +1,3 @@
-
 function setTitle(){
     setupWKWebViewJavascriptBridge(function(bridge) {
         const title = document.title

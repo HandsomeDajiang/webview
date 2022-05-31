@@ -17,43 +17,46 @@ function macOsInjectWKWebViewJavascriptBridge(func) {
 // 处理postmessage回调
 function handelMessage(e){
     // TODO 接收的消息 origin 校验
-    console.log('&*&*&*&*&*&');
-    console.log(e.origin);
-    if (!e.origin || e.origin.length === 0 || e.origin !== "file://") {
-        clearInterval(window.localTimer);
-        alert('Receive Unknown Origin Message!');
-        return ;
-    }
+    // if (!e.origin || e.origin.length === 0) {
+    //   clearInterval(window.localTimer);
+    //   alert('Receive Message Origin Is Undefined!');
+    //   return;
+    // }
+    // if (e.origin !== "file://") {
+    //   clearInterval(window.localTimer);
+    //   alert('Receive Unknown Origin Message!');
+    //   return ;
+    // }
 
     console.log('iframe receive postmessage data: ' + JSON.stringify(e.data));
     const { callbackid, response } = e.data || {}
-    const { status } = response || {}
+    const { status, reason } = response || {}
 
     if (!status) {
-        console.log('receive data no status imformation.');
+        console.log('receive data no status information.');
         clearInterval(window.localTimer);
         console.log('clear local Interval timer, timer_id: ' + window.localTimer.toString());
         alert('error postmessage data receive!');
         return;
     }
 
+    if (!callbackid || callbackid.length === 0) {
+        clearInterval(window.localTimer);
+        console.log('clear local Interval timer, timer_id: ' + window.localTimer.toString());
+    }
+
     switch (status) {
         case 400:
-            console.log('error 400');
+            console.error('error: ' + reason);
             clearInterval(window.localTimer);
             console.log('clear local Interval timer, timer_id: ' + window.localTimer.toString());
-            alert('error 400');
+            alert('error: ' + reason);
             return;
         default:
             console.log('continue...');
     }
 
-    if (callbackid){
-        return responseTempOperation(response, callbackid);
-    }
-
-    clearInterval(window.localTimer);
-    console.log('clear local Interval timer, timer_id: ' + window.localTimer.toString());
+    return responseTempOperation(response, callbackid);
 }
 
 // 回调数据临时存储
@@ -69,6 +72,11 @@ async function callHandler(methodName, params, callback) {
 
 // postmessage
 async function postmessage(methodName, params) {
+    // 极端 或 位置情况下 定时器没有清除，这边每次请求 都清一次定时器。
+    if (window.localTimer) {
+        clearInterval(window.localTimer);
+    }
+
     if (!methodName) {
         console.log('post request without methodName.');
         alert("methodName could not be empty！");

@@ -11,10 +11,8 @@
 <body>
     <div>
 <!--        <button onclick="closeWindow()">关闭窗口</button>-->
-<!--        <button id="btn" onclick="getToken()">getToken</button>-->
+        <button id="btn" onclick="getToken()">getToken</button>
 <!--        <textarea name="textarea" id="text" cols="30" rows="10"></textarea>-->
-        <button onclick="removeToken()">removeToken</button>
-        <button onclick="removeToken()">removeToken</button>
         <button onclick="removeToken()">removeToken</button>
         <button onclick="setTitle()">setTitle</button>
     </div>
@@ -60,8 +58,7 @@
 
         // IOS ，onload 中注册  window.WKWebViewJavascriptBridge 对象。
         setupWKWebViewJavascriptBridge(function(bridge) {
-            const parmas = {'appId': 'b4933e7b0c12f9c16a'}
-            bridge.callHandler('getMiniProgramToken', parmas, function(response) {
+            bridge.callHandler('', null, function(response) {
 
             });
         });
