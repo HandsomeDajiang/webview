@@ -77,11 +77,6 @@ async function postmessage(methodName, params) {
         clearInterval(window.localTimer);
     }
 
-    if (!methodName) {
-        console.log('post request without methodName.');
-        alert("methodName could not be empty！");
-        return ;
-    }
     window.WKWVJBCallbacks = {};
     const callbackid = new Date().getTime().toString();
     const message = {
