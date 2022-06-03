@@ -17,16 +17,16 @@ function macOsInjectWKWebViewJavascriptBridge(func) {
 // 处理postmessage回调
 function handelMessage(e){
     // TODO 接收的消息 origin 校验
-    // if (!e.origin || e.origin.length === 0) {
-    //   clearInterval(window.localTimer);
-    //   alert('Receive Message Origin Is Undefined!');
-    //   return;
-    // }
-    // if (e.origin !== "file://") {
-    //   clearInterval(window.localTimer);
-    //   alert('Receive Unknown Origin Message!');
-    //   return ;
-    // }
+    if (!e.origin || e.origin.length === 0) {
+        clearInterval(window.localTimer);
+        alert('Receive Message Origin Is Undefined!');
+        return;
+    }
+    if (e.origin !== "file://") {
+        clearInterval(window.localTimer);
+        alert('Receive Unknown Origin Message!');
+        return ;
+    }
 
     console.log('iframe receive postmessage data: ' + JSON.stringify(e.data));
     const { callbackid, response } = e.data || {}
@@ -67,12 +67,18 @@ function responseTempOperation(response, callbackid) {
 // getToken、removeToken、closePage 等触发事件
 async function callHandler(methodName, params, callback) {
     console.log('received a post request, trigger callHandler.');
-    callback(await postmessage(methodName,params));
+    if (!callback) {
+        console.log('没有参数的方法进来了')
+        callback(await postmessage(methodName));
+    }else {
+        console.log('有参数的方法进来了')
+        callback(await postmessage(methodName,params));
+    }
 }
 
 // postmessage
-async function postmessage(methodName, params) {
-    // 极端 或 位置情况下 定时器没有清除，这边每次请求 都清一次定时器。
+async function postmessage(methodName, params = {}) {
+    // 极端 或 未知异常的情况下 定时器没有清除，这边每次请求 都清一次定时器。
     if (window.localTimer) {
         clearInterval(window.localTimer);
     }

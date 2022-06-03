@@ -1,9 +1,8 @@
-function setTitle(){
+function getToken(){
     setupWKWebViewJavascriptBridge(function(bridge) {
         const title = document.title
-        const params = {title}
-        bridge.callHandler('setTitle', params, function(response) {
-
+        bridge.callHandler('setTitle',null,function(response) {
+           console.log(response);
         });
     });
 }

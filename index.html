@@ -14,7 +14,7 @@
 <!--        <button id="btn" onclick="getToken()">getToken</button>-->
 <!--        <textarea name="textarea" id="text" cols="30" rows="10"></textarea>-->
 <!--        <button onclick="removeToken()">removeToken</button>-->
-        <button onclick="setTitle()">setTitle</button>
+        <button onclick="getToken()">get</button>
     </div>
 </body>
 </html>
@@ -46,7 +46,7 @@
             // 此方法需要 引入 macOsInject 后才生效。
             macOsInjectWKWebViewJavascriptBridge(setupWKWebViewJavascriptBridge);
 
-            // chu shi hua title
+            // // chu shi hua title
             setupWKWebViewJavascriptBridge(function(bridge) {
                 const title = document.title
                 const params = {title}
@@ -57,11 +57,11 @@
         }
 
         // IOS ，onload 中注册  window.WKWebViewJavascriptBridge 对象。
-        setupWKWebViewJavascriptBridge(function(bridge) {
-            bridge.callHandler('', null, function(response) {
-
-            });
-        });
+        // setupWKWebViewJavascriptBridge(function(bridge) {
+        //     bridge.callHandler('', null, function(response) {
+        //
+        //     });
+        // });
     }
 </script>
 
