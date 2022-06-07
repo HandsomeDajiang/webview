@@ -67,17 +67,11 @@ function responseTempOperation(response, callbackid) {
 // getToken、removeToken、closePage 等触发事件
 async function callHandler(methodName, params, callback) {
     console.log('received a post request, trigger callHandler.');
-    if (!callback) {
-        console.log('没有参数的方法进来了')
-        callback(await postmessage(methodName));
-    }else {
-        console.log('有参数的方法进来了')
-        callback(await postmessage(methodName,params));
-    }
+    callback(await postmessage(methodName,params));
 }
 
 // postmessage
-async function postmessage(methodName, params = {}) {
+async function postmessage(methodName, params) {
     // 极端 或 未知异常的情况下 定时器没有清除，这边每次请求 都清一次定时器。
     if (window.localTimer) {
         clearInterval(window.localTimer);
