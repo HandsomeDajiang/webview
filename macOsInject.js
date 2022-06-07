@@ -30,7 +30,7 @@ function handelMessage(e){
 
     console.log('iframe receive postmessage data: ' + JSON.stringify(e.data));
     const { callbackid, response } = e.data || {}
-    const { status, reason } = response || {}
+    const { status } = response || {}
 
     if (!status) {
         console.log('receive data no status information.');
@@ -43,17 +43,6 @@ function handelMessage(e){
     if (!callbackid || callbackid.length === 0) {
         clearInterval(window.localTimer);
         console.log('clear local Interval timer, timer_id: ' + window.localTimer.toString());
-    }
-
-    switch (status) {
-        case 400:
-            console.error('error: ' + reason);
-            clearInterval(window.localTimer);
-            console.log('clear local Interval timer, timer_id: ' + window.localTimer.toString());
-            alert('error: ' + reason);
-            return;
-        default:
-            console.log('continue...');
     }
 
     return responseTempOperation(response, callbackid);
