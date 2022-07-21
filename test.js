@@ -14,7 +14,7 @@ function getToken1(){
     //     'message789797',
     //     '*',
     // );
-    const xxx = window.myAPI.getTokenTest();
+    const xxx = window.getTokenTest();
     alert(xxx);
 }
 
