@@ -18,17 +18,17 @@ function macOsInjectWKWebViewJavascriptBridge(func) {
 // 处理postmessage回调
 function handelMessage(e){
     // TODO 接收的消息 origin 校验
-    if (!e.origin || e.origin.length === 0) {
-        clearInterval(window.localTimer);
-        alert('Receive Message Origin Is Undefined!');
-        return;
-    }
-    if (e.origin !== "file://") {
-        clearInterval(window.localTimer);
-        alert('Receive Unknown Origin Message!');
-        return ;
-    }
-
+    // if (!e.origin || e.origin.length === 0) {
+    //     clearInterval(window.localTimer);
+    //     alert('Receive Message Origin Is Undefined!');
+    //     return;
+    // }
+    // if (e.origin !== "file://") {
+    //     clearInterval(window.localTimer);
+    //     alert('Receive Unknown Origin Message!');
+    //     return ;
+    // }
+    alert(123)
     console.log('iframe receive postmessage data: ' + JSON.stringify(e.data));
     const { callbackid, response } = e.data || {}
     const { status } = response || {}
