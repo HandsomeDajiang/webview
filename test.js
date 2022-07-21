@@ -6,6 +6,12 @@ function getToken(){
     // });
     window.top.postMessage(
         'message',
-        '*',
+        'file://*',
     );
+}
+
+window.onmessage = handelMessage;
+function handelMessage(e){
+    console.error(e.origin)
+    alert(e.origin.toString())
 }

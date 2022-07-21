@@ -1,3 +1,4 @@
+// const TARGET_ORIGIN = "file://*";
 const TARGET_ORIGIN = "*";
 
 // 初始化
