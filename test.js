@@ -6,7 +6,7 @@
 // }
 function getToken1(){
     setupWKWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('getMiniProgramToken',{},function(response) {
+        bridge.callHandler('getMiniProgramToken',{key: "66666"},function(response) {
            console.log(response);
         });
     });
