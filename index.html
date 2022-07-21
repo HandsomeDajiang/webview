@@ -12,7 +12,7 @@
     <div>
 <!--        <button id="btn" onclick="getToken()">getToken</button>-->
 <!--        <textarea name="textarea" id="text" cols="30" rows="10"></textarea>-->
-        <button onclick="removeToken()">removeToken</button>
+<!--        <button onclick="removeToken()">removeToken</button>-->
         <button onclick="getToken()">get</button>
     </div>
 </body>
@@ -54,7 +54,7 @@
                 });
             });
         }
-        
+
         // IOS ，onload 中注册  window.WKWebViewJavascriptBridge 对象。
         setupWKWebViewJavascriptBridge(function(bridge) {
             bridge.callHandler('', {}, function(response) {
