@@ -14,22 +14,22 @@
 <!--        <textarea name="textarea" id="text" cols="30" rows="10"></textarea>-->
 <!--        <button onclick="removeToken()">removeToken</button>-->
 <!--        <button onclick="getToken()">123get*&&*&*&*</button>-->
-        <button onclick="getToken1()">get123</button>
+        <button onclick="getToken1()">get123^^^</button>
     </div>
 </body>
 </html>
 <script>
-    function isMac() {
-        // TODO 根据 UA 信息判断设备 IOS 或者 MacOS  这边临时简单判断。
-        return navigator.userAgent.includes('Mac');
-    }
+    // function isMac() {
+    //     // TODO 根据 UA 信息判断设备 IOS 或者 MacOS  这边临时简单判断。
+    //     return navigator.userAgent.includes('Mac');
+    // }
     function setupWKWebViewJavascriptBridge(callback) {
-        if (isMac()){
-            if (!window.WKWebViewJavascriptBridge) {
-                throw new Error('must be inject macOsInject.js');
-            }
-            return callback(window.WKWebViewJavascriptBridge)
-        }
+        // if (isMac()){
+        //     if (!window.WKWebViewJavascriptBridge) {
+        //         throw new Error('must be inject macOsInject.js');
+        //     }
+        //     return callback(window.WKWebViewJavascriptBridge)
+        // }
         if (window.WKWebViewJavascriptBridge) {
             return callback(window.WKWebViewJavascriptBridge);
         }
@@ -41,27 +41,26 @@
     }
 
     window.onload = function () {
-
-        if (isMac()){
+        // if (isMac()){
             // 此方法需要 引入 macOsInject 后才生效。
             macOsInjectWKWebViewJavascriptBridge(setupWKWebViewJavascriptBridge);
 
             // // chu shi hua title
-            setupWKWebViewJavascriptBridge(function(bridge) {
-                const title = document.title
-                const params = {title}
-                bridge.callHandler('setTitle', params, function(response) {
-
-                });
-            });
-        }
+            // setupWKWebViewJavascriptBridge(function(bridge) {
+            //     const title = document.title
+            //     const params = {title}
+            //     bridge.callHandler('setTitle', params, function(response) {
+            //
+            //     });
+            // });
+        // }
 
         // IOS ，onload 中注册  window.WKWebViewJavascriptBridge 对象。
-        setupWKWebViewJavascriptBridge(function(bridge) {
-            bridge.callHandler('', {}, function(response) {
-
-            });
-        });
+        // setupWKWebViewJavascriptBridge(function(bridge) {
+        //     bridge.callHandler('', {}, function(response) {
+        //
+        //     });
+        // });
     }
 </script>
 
