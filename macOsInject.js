@@ -28,9 +28,8 @@ function handelMessage(e){
     //     alert('Receive Unknown Origin Message!');
     //     return ;
     // }
-
-    alert(12313121313)
-    console.log('iframe receive postmessage data: ' + JSON.stringify(e.data));
+    alert(JSON.stringify(e.data));
+    console.error('iframe receive postmessage data: ' + JSON.stringify(e.data));
     const { callbackid, response } = e.data || {}
     const { status } = response || {}
 
