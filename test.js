@@ -1,26 +1,26 @@
-// function getToken(){
-//     window.top.postMessage(
-//         'message123',
-//         'https://handsomedajiang.github.io',
-//     );
-// }
-function getToken1(){
+function getToken(){
     setupWKWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('getMiniProgramToken',{key: "66666"},function(response) {
-           console.error(response);
-           console.error("^&%&^%%%&%&%&%^%&%&%&%^&%&");
+        bridge.callHandler('getMiniProgramToken',{},function(response) {
+            console.error('手动获取token');
+            console.error(response);
         });
     });
-    // window.top.postMessage(
-    //     'message789797',
-    //     '*',
-    // );
-    // const xxx = window.getTokenTest();
-    // alert(xxx);
+    setupWKWebViewJavascriptBridge(function(bridge) {
+        bridge.callHandler('removeMiniProgramToken',{},function(response) {
+            console.error('手动移除token');
+            console.error(response);
+        });
+    });
+    setupWKWebViewJavascriptBridge(function(bridge) {
+        bridge.callHandler('setTitle',{},function(response) {
+            console.error('手动设置Title');
+            console.error(response);
+        });
+    });
+    setupWKWebViewJavascriptBridge(function(bridge) {
+        bridge.callHandler('closePage',{},function(response) {
+            console.error('手动关闭窗口');
+            console.error(response);
+        });
+    });
 }
-
-// window.onmessage = handelMessage;
-// function handelMessage(e){
-//     console.error(e.origin)
-//     alert(e.origin.toString())
-// }
