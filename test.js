@@ -27,7 +27,7 @@ function closePage() {
 
 function setTitle() {
     setupWKWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('setTitle',{},function(response) {
+        bridge.callHandler('setTitle',{title: 'qiudashai'},function(response) {
             console.error('手动设置Title');
             console.error(response);
         });
