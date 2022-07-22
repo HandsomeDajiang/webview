@@ -5,17 +5,18 @@
 //     );
 // }
 function getToken1(){
-    // setupWKWebViewJavascriptBridge(function(bridge) {
-    //     bridge.callHandler('getMiniProgramToken',{key: "66666"},function(response) {
-    //        console.log(response);
-    //     });
-    // });
+    setupWKWebViewJavascriptBridge(function(bridge) {
+        bridge.callHandler('getMiniProgramToken',{key: "66666"},function(response) {
+           console.error(response);
+           console.error("^&%&^%%%&%&%&%^%&%&%&%^&%&");
+        });
+    });
     // window.top.postMessage(
     //     'message789797',
     //     '*',
     // );
-    const xxx = window.getTokenTest();
-    alert(xxx);
+    // const xxx = window.getTokenTest();
+    // alert(xxx);
 }
 
 // window.onmessage = handelMessage;
