@@ -18,37 +18,49 @@
         <button onclick="removeToken()">移除token2</button>
         <button onclick="setTitle()">设置title2</button>
         <button onclick="closePage()">关闭窗口2</button>
+        <button onclick="testGlobal()">测试全局</button>
     </div>
 </body>
 </html>
 <script>
-    function isMac() {
-        return navigator.userAgent.includes('Mac');
-    }
-    function setupWKWebViewJavascriptBridge(callback) {
-        if (isMac()){
-            if (!window.WKWebViewJavascriptBridge) {
-                throw new Error('WKWebViewJavascriptBridge is undefined');
-            }
-            return callback(window.WKWebViewJavascriptBridge)
-        }
-        if (window.WKWebViewJavascriptBridge) {
-            return callback(window.WKWebViewJavascriptBridge);
-        }
-        if (window.WKWVJBCallbacks) {
-            return window.WKWVJBCallbacks.push(callback);
-        }
-        window.WKWVJBCallbacks = [callback];
-        window.webkit.messageHandlers.iOS_Native_InjectJavascript.postMessage(null);
-    }
-    window.onload = function () {
-        // IOS ，onload 中注册  window.WKWebViewJavascriptBridge 对象。
-        setupWKWebViewJavascriptBridge(function(bridge) {
-            bridge.callHandler('getMiniProgramToken', {}, function(response) {
-                console.error('初始化数据获取token');
-                console.error(response);
-            });
-        });
-    }
+    // function isMac() {
+    //     return navigator.userAgent.includes('Mac');
+    // }
+    // function setupWKWebViewJavascriptBridge(callback) {
+    //     if (isMac()){
+    //         if (!window.WKWebViewJavascriptBridge) {
+    //             throw new Error('WKWebViewJavascriptBridge is undefined');
+    //         }
+    //         return callback(window.WKWebViewJavascriptBridge)
+    //     }
+    //     if (window.WKWebViewJavascriptBridge) {
+    //         return callback(window.WKWebViewJavascriptBridge);
+    //     }
+    //     if (window.WKWVJBCallbacks) {
+    //         return window.WKWVJBCallbacks.push(callback);
+    //     }
+    //     window.WKWVJBCallbacks = [callback];
+    //     window.webkit.messageHandlers.iOS_Native_InjectJavascript.postMessage(null);
+    // }
+    // window.onload = function () {
+    //     if (isMac()){
+    //         // 此方法需要 引入 macOsInject 后才生效。
+    //         macOsInjectWKWebViewJavascriptBridge(setupWKWebViewJavascriptBridge);
+    //         // // chu shi hua title
+    //         setupWKWebViewJavascriptBridge(function(bridge) {
+    //             const title = document.title
+    //             const params = {title}
+    //             bridge.callHandler('setTitle', params, function(response) {
+    //             });
+    //         });
+    //     }
+    //     // IOS ，onload 中注册  window.WKWebViewJavascriptBridge 对象。
+    //     setupWKWebViewJavascriptBridge(function(bridge) {
+    //         bridge.callHandler('getMiniProgramToken', {}, function(response) {
+    //             console.error('初始化数据获取token');
+    //             console.error(response);
+    //         });
+    //     });
+    // }
 </script>
 
