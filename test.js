@@ -1,7 +1,11 @@
 function getToken(){
     setupWKWebViewJavascriptBridge(function(bridge) {
         bridge.callHandler('getMiniProgramToken',{},function(response) {
-            console.error('手动获取token');
+            console.error('getMiniProgramToken');
+            console.error(response);
+        });
+        bridge.callHandler('setTitle',{title: 'yyy'},function(response) {
+            console.error('setTitle');
             console.error(response);
         });
     });
