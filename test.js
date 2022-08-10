@@ -11,10 +11,16 @@ function getToken(){
     });
 }
 
-function removeToken() {
+function getToken2() {
     setupWKWebViewJavascriptBridge(function(bridge) {
-        bridge.callHandler('removeMiniProgramToken',{},function(response) {
-            console.error('手动移除token');
+        bridge.callHandler('getMiniProgramToken',{},function(response) {
+            console.error('getMiniProgramToken');
+            console.error(response);
+        });
+    });
+    setupWKWebViewJavascriptBridge(function(bridge) {
+        bridge.callHandler('setTitle',{title: 'yyy'},function(response) {
+            console.error('setTitle');
             console.error(response);
         });
     });
